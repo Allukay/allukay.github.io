@@ -26,7 +26,7 @@
         }
 
         .menu-container {
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         select {
@@ -37,6 +37,13 @@
             border-radius: 10px;
             color: white;
             cursor: pointer;
+        }
+
+        .selection-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         .card-container {
@@ -87,7 +94,6 @@
             font-size: 0.9em;
             color: #f0e6ff;
         }
-
     </style>
 </head>
 <body>
@@ -102,10 +108,20 @@
         </select>
     </div>
 
-    <div class="menu-container" id="pokemon-selection" style="display: none;">
-        <select id="pokemon-select" onchange="updateCards()">
-            <option value="" disabled selected>Choisir un Pokémon</option>
-        </select>
+    <div class="selection-container">
+        <div class="menu-container" id="pokemon-selection" style="display: none;">
+            <select id="pokemon-select" onchange="updateCards()">
+                <option value="" disabled selected>Choisir un Pokémon</option>
+            </select>
+        </div>
+
+        <div class="menu-container" id="filter-container" style="display: none;">
+            <select id="filter-select" onchange="updateCards()">
+                <option value="all">Toutes les cartes</option>
+                <option value="owned">Possédées</option>
+                <option value="not-owned">Non possédées</option>
+            </select>
+        </div>
     </div>
 
     <div class="card-container" id="card-list"></div>
@@ -115,7 +131,7 @@
             "nathan": ["skelenox", "toutombe"],
             "dan": ["toutombe"]
         };
-    
+
         const pokemonData = {
             "skelenox": [
             { id: "skelenox1", nom: "Skélénox (Choc Spatio-Temporel 070)", image: "https://www.pokepedia.fr/images/7/7f/Carte_Choc_Spatio-Temporel_070.png" },
@@ -127,20 +143,20 @@
             { id: "skelenox7", nom: "Skélénox (Écarlate et Violet Évolutions Prismatiques 035)", image: "https://www.pokepedia.fr/images/thumb/a/a4/Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_035.png/368px-Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_035.png" },
             { id: "skelenox8", nom: "Skélénox (Écarlate et Violet Fable Nébuleuse 018)", image: "https://www.pokepedia.fr/images/thumb/2/20/Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_018.png/368px-Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_018.png" },
             { id: "skelenox9", nom: "Skélénox (Écarlate et Violet Fable Nébuleuse 068)", image: "https://www.pokepedia.fr/images/thumb/3/3c/Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_068.png/368px-Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_068.png" },
-            { id: "skelenox10", nom: "Skélénox (Épée et Bouclier Stars Étincelantes 060)", image: "https://www.pokepedia.fr/images/thumb/a/ac/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png" }
+            { id: "skelenox10", nom: "Skélénox (Épée et Bouclier Stars Étincelantes 060)", image: "https://www.pokepedia.fr/images/thumb/a/ac/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png" },
             ],
             "toutombe": [
                 { id: "toutombe1", nom: "Toutombe (Écarlate et Violet 104)", image: "https://www.pokepedia.fr/images/thumb/d/d0/Carte_%C3%89carlate_et_Violet_104.png/368px-Carte_%C3%89carlate_et_Violet_104.png" }
             ]
         };
-    
+
         function selectUser() {
             const user = document.getElementById("user-select").value;
             localStorage.setItem("selectedUser", user);
             resetPokemonSelection();
             loadPokemonOptions(user);
         }
-    
+
         function loadPokemonOptions(user) {
             const selectPokemon = document.getElementById("pokemon-select");
             selectPokemon.innerHTML = "";
@@ -150,7 +166,7 @@
             defaultOption.selected = true;
             defaultOption.textContent = "Choisir un Pokémon";
             selectPokemon.appendChild(defaultOption);
-    
+
             if (userPokemon[user]) {
                 userPokemon[user].forEach(pokemon => {
                     const option = document.createElement("option");
@@ -158,88 +174,65 @@
                     option.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
                     selectPokemon.appendChild(option);
                 });
-    
+
                 document.getElementById("pokemon-selection").style.display = "block";
             } else {
                 document.getElementById("pokemon-selection").style.display = "none";
             }
         }
-    
+
         function resetPokemonSelection() {
             document.getElementById("pokemon-select").selectedIndex = 0;
             document.getElementById("card-list").innerHTML = "";
+            document.getElementById("filter-container").style.display = "none";
         }
-    
+
         function updateCards() {
             const pokemon = document.getElementById("pokemon-select").value;
+            const filter = document.getElementById("filter-select").value;
             const container = document.getElementById("card-list");
             container.innerHTML = "";
-    
+
             if (pokemonData[pokemon]) {
+                document.getElementById("filter-container").style.display = "block";
                 pokemonData[pokemon].forEach(carte => {
+                    const cardId = `${getCurrentUser()}-${carte.id}`;
+                    const owned = localStorage.getItem(cardId) === "true";
+
+                    if (filter === "owned" && !owned) return;
+                    if (filter === "not-owned" && owned) return;
+
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
                         <img src="${carte.image}" alt="${carte.nom}">
                         <p>${carte.nom}</p>
-                        <input type="checkbox" id="${getCurrentUser()}-${carte.id}" onclick="saveSelection('${getCurrentUser()}-${carte.id}')">
-                        <label for="${getCurrentUser()}-${carte.id}">Possédée</label>
+                        <input type="checkbox" id="${cardId}" onclick="saveSelection('${cardId}')" ${owned ? "checked" : ""}>
+                        <label for="${cardId}">Possédée</label>
                     `;
                     container.appendChild(card);
-    
-                    const storedValue = localStorage.getItem(`${getCurrentUser()}-${carte.id}`);
-                    if (storedValue === "true") {
-                        document.getElementById(`${getCurrentUser()}-${carte.id}`).checked = true;
-                    }
                 });
             }
         }
-    
+
         function getCurrentUser() {
             return localStorage.getItem("selectedUser");
         }
-    
+
         function saveSelection(id) {
             const checked = document.getElementById(id).checked;
             localStorage.setItem(id, checked);
+            updateCards();
         }
-    
+
         window.onload = function() {
             localStorage.removeItem("selectedUser");
             document.getElementById("user-select").value = "";
             document.getElementById("pokemon-selection").style.display = "none";
+            document.getElementById("filter-container").style.display = "none";
             document.getElementById("card-list").innerHTML = "";
         }
     </script>
-    
 
 </body>
-
-
-
-<!--
-
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⢠⣄⡀
-⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⣠⣿⣿⣿⣶⣄
-⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⣿⣿⣿⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣾⣿⣿⣿⣿⣿⣷⡄
-⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦
-⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧
-⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⠟⠛⠛⠛⠿⢿⣿⣿⣿⣿⡿⠿⠛⠛⠛⢿⣿⣿⣿⣿⣿⣿⣿⣇
-⠀⠀⢰⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀ ⠀ ⠙⠿⠿⠋ ⠀⠀⠀⠀⠀ ⠈⢿⣿⣿⣿⣿⣿⣿⡇
-⠀⠀⢸⣿⣿⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠹⣿⣿⣿⣿⣿⡇
-⠀⠀⣿⣿⣿⣿⡿⠁⠀⣠⣶⣶⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣶⣶⣶⣄  ⠹⣿⣿⣿⣿⡇
-⠀⠀⢸⣿⣿⣿⠇⠀⠼⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⡆  ⢿⣿⣿⣿
-⠀⠀⠸⣿⣿⣿⠀⠀⠀⠈⠙⢿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⣿⣿⣿⣧ ⠀ ⣿⣿⣿
-⠀⠀⠀⢿⣿⣿⠀⠀⢀⣠⣶⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣾⣿⣿⣿⡏ ⠀ ⣿⣿⡟
-⠀⠀⠀⠈⢿⣿⡆⠀⠜⠛⠋⠉⠙⠛⠃⠄⠀⠀⠀⠀⠀⠀⠀⠄⠛⠛⠉⠉⠛⠛⠥ ⢰⣿⡿⠁
-⠀⠀⠀⠀⠈⢿⣷⡀⠀⠀⠀⠀⢀⡴⡖⠲⡦⢤⣀⣀⣀⣀⡠⠤⡖⢲⢦⠀⠀⠀⠀⢀⣿⡟⠁
-⠀⠀⠀⠀⠀⠀⠻⣷⡄⠀⠀ ⢸⠀⡇⠀⡇⠀⡇⠀⡇⠀⡇⠀⡇⢸ ⠈⡇⠀⠀ ⣰⣿⠋
-⠀⠀⠀⠀⠀⠀⠀⠈⠻⣦⡀  ⠑⣇⡀⡇⠀⡇⠀⡇⠀⡇⠀⣇⣸⠞⠁⠀ ⣠⡾⠁
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠲⢤⣀⠀⠉⠛⠒⠷⠶⠷⠒⠛⠋⠉⢀⣠⡴⠞⠉
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠓⠒⠦⠤⠤⠤⠤⠶⠒⠚⠉⠁
-
--->
-
-
-
 </html>
