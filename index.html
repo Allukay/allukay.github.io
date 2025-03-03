@@ -94,7 +94,6 @@
 
     <h1>Cartalogue Pokémon</h1>
 
-    <!-- Sélection de l'utilisateur -->
     <div class="menu-container" id="user-selection">
         <select id="user-select" onchange="selectUser()">
             <option value="" disabled selected>Choisir votre profil</option>
@@ -103,7 +102,6 @@
         </select>
     </div>
 
-    <!-- Sélection du Pokémon (invisible tant que l'utilisateur n'a pas été sélectionné) -->
     <div class="menu-container" id="pokemon-selection" style="display: none;">
         <select id="pokemon-select" onchange="updateCards()">
             <option value="" disabled selected>Choisir un Pokémon</option>
@@ -113,7 +111,6 @@
     <div class="card-container" id="card-list"></div>
 
     <script>
-    // Liste des Pokémon attribués à chaque utilisateur
     const userPokemon = {
         "nathan": ["skelenox", "toutombe"],
         "dan": ["toutombe"]
@@ -122,27 +119,17 @@
     const pokemonData = {
         "skelenox": [
             { id: "skelenox1", nom: "Skélénox (Choc Spatio-Temporel 070)", image: "https://www.pokepedia.fr/images/7/7f/Carte_Choc_Spatio-Temporel_070.png" },
-            { id: "skelenox2", nom: "Skélénox (Diamant & Perle 80)", image: "https://www.pokepedia.fr/images/thumb/4/49/Carte_Diamant_%26_Perle_80.png/368px-Carte_Diamant_%26_Perle_80.png" },
-            { id: "skelenox3", nom: "Skélénox (Diamant & Perle Merveilles Secrètes 86)", image: "https://www.pokepedia.fr/images/thumb/c/c4/Carte_Diamant_%26_Perle_Merveilles_Secr%C3%A8tes_86.png/368px-Carte_Diamant_%26_Perle_Merveilles_Secr%C3%A8tes_86.png" },
-            { id: "skelenox4", nom: "Skélénox (Diamant & Perle Tempête 59)", image: "https://www.pokepedia.fr/images/thumb/7/79/Carte_Diamant_%26_Perle_Temp%C3%AAte_59.png/368px-Carte_Diamant_%26_Perle_Temp%C3%AAte_59.png" },
-            { id: "skelenox5", nom: "Skélénox (Diamant & Perle Tempête 60)", image: "https://www.pokepedia.fr/images/thumb/2/23/Carte_Diamant_%26_Perle_Temp%C3%AAte_60.png/368px-Carte_Diamant_%26_Perle_Temp%C3%AAte_60.png" },
-            { id: "skelenox6", nom: "Skélénox (Diamant & Perle Tempête SH2)", image: "https://www.pokepedia.fr/images/thumb/7/79/Carte_Diamant_%26_Perle_Temp%C3%AAte_SH2.png/368px-Carte_Diamant_%26_Perle_Temp%C3%AAte_SH2.png" },
-            { id: "skelenox7", nom: "Skélénox (Écarlate et Violet Évolutions Prismatiques 035)", image: "https://www.pokepedia.fr/images/thumb/a/a4/Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_035.png/368px-Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_035.png" },
-            { id: "skelenox8", nom: "Skélénox (Écarlate et Violet Fable Nébuleuse 018)", image: "https://www.pokepedia.fr/images/thumb/2/20/Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_018.png/368px-Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_018.png" },
-            { id: "skelenox9", nom: "Skélénox (Écarlate et Violet Fable Nébuleuse 068)", image: "https://www.pokepedia.fr/images/thumb/3/3c/Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_068.png/368px-Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_068.png" },
-            { id: "skelenox10", nom: "Skélénox (Épée et Bouclier Stars Étincelantes 060)", image: "https://www.pokepedia.fr/images/thumb/a/ac/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png" },
+            { id: "skelenox2", nom: "Skélénox (Diamant & Perle 80)", image: "https://www.pokepedia.fr/images/thumb/4/49/Carte_Diamant_%26_Perle_80.png/368px-Carte_Diamant_%26_Perle_80.png" }
         ],
         "toutombe": [
             { id: "toutombe1", nom: "Toutombe (Écarlate et Violet 104)", image: "https://www.pokepedia.fr/images/thumb/d/d0/Carte_%C3%89carlate_et_Violet_104.png/368px-Carte_%C3%89carlate_et_Violet_104.png" }
         ]
     };
 
-    // Fonction pour obtenir l'utilisateur actuellement sélectionné
     function getCurrentUser() {
         return localStorage.getItem("selectedUser");
     }
 
-    // Fonction de sélection de l'utilisateur
     function selectUser() {
         const user = document.getElementById("user-select").value;
         if (user) {
@@ -151,24 +138,21 @@
         } else {
             localStorage.removeItem("selectedUser");
             document.getElementById("pokemon-selection").style.display = "none";
-            document.getElementById("card-list").innerHTML = ""; // Vider les cartes à chaque fois qu'un utilisateur est retiré
+            document.getElementById("card-list").innerHTML = "";
         }
     }
 
-    // Fonction pour charger les options de Pokémon
     function loadPokemonOptions(user) {
         const selectPokemon = document.getElementById("pokemon-select");
-        selectPokemon.innerHTML = ""; // Vider les options précédentes
-
-        // Ajouter une option par défaut "Choisir un Pokémon"
+        selectPokemon.innerHTML = "";
         const defaultOption = document.createElement("option");
         defaultOption.value = "";
         defaultOption.disabled = true;
         defaultOption.selected = true;
         defaultOption.textContent = "Choisir un Pokémon";
-        selectPokemon.appendChild(defaultOption); // Ajouter l'option par défaut
+        selectPokemon.appendChild(defaultOption);
 
-        if (userPokemon[user] && userPokemon[user].length > 0) {
+        if (userPokemon[user]) {
             userPokemon[user].forEach(pokemon => {
                 const option = document.createElement("option");
                 option.value = pokemon;
@@ -183,11 +167,10 @@
         }
     }
 
-    // Fonction pour mettre à jour les cartes en fonction du Pokémon sélectionné
     function updateCards() {
         const pokemon = document.getElementById("pokemon-select").value;
         const container = document.getElementById("card-list");
-        container.innerHTML = ""; // Vider le conteneur de cartes
+        container.innerHTML = "";
 
         if (pokemonData[pokemon]) {
             pokemonData[pokemon].forEach(carte => {
@@ -201,7 +184,6 @@
                 `;
                 container.appendChild(card);
 
-                // Charger l'état des cases cochées depuis le localStorage
                 const storedValue = localStorage.getItem(`${getCurrentUser()}-${carte.id}`);
                 if (storedValue === "true") {
                     document.getElementById(`${getCurrentUser()}-${carte.id}`).checked = true;
@@ -210,20 +192,20 @@
         }
     }
 
-    // Fonction pour sauvegarder l'état de la case cochée dans le localStorage
     function saveSelection(id) {
         const checked = document.getElementById(id).checked;
         localStorage.setItem(id, checked);
     }
 
-    // Initialiser la page à chaque rechargement
     window.onload = function() {
         localStorage.removeItem("selectedUser");
         document.getElementById("user-select").value = "";
         document.getElementById("pokemon-selection").style.display = "none";
         document.getElementById("card-list").innerHTML = "";
     }
-</script>
+    </script>
+
+</body>
 
 
 
@@ -249,3 +231,7 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠓⠒⠦⠤⠤⠤⠤⠶⠒⠚⠉⠁
 
 -->
+
+
+
+</html>
