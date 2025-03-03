@@ -98,13 +98,13 @@
 </head>
 <body>
 
-    <h1>Cartalogue Pokémon</h1>
+    <h1>Si tu vois ça, dis moi et je mettrai un Easter Egg sur ta page</h1>
 
     <div class="menu-container" id="user-selection">
         <select id="user-select" onchange="selectUser()">
             <option value="" disabled selected>Choisir votre profil</option>
             <option value="nathan">Nathan</option>
-            <option value="dan">Dan</option>
+            <option value="celia">Célia</option>
         </select>
     </div>
 
@@ -129,7 +129,7 @@
     <script>
         const userPokemon = {
             "nathan": ["skelenox", "toutombe"],
-            "dan": ["toutombe"]
+            "celia": ["riolu"]
         };
 
         const pokemonData = {
@@ -147,6 +147,41 @@
             ],
             "toutombe": [
                 { id: "toutombe1", nom: "Toutombe (Écarlate et Violet 104)", image: "https://www.pokepedia.fr/images/thumb/d/d0/Carte_%C3%89carlate_et_Violet_104.png/368px-Carte_%C3%89carlate_et_Violet_104.png" }
+            ],
+            "riolu": [
+                { id: "riolu1", nom: "Riolu (Choc Spatio-Temporel 091)", image: "https://www.pokepedia.fr/images/5/5c/Carte_Choc_Spatio-Temporel_091.png" },
+                { id: "riolu2", nom: "Riolu (Destinées Occultes SV21)", image: "https://www.pokepedia.fr/images/thumb/d/db/Carte_Destin%C3%A9es_Occultes_SV21.png/368px-Carte_Destin%C3%A9es_Occultes_SV21.png" },
+                { id: "riolu3", nom: "Riolu (Diamant & Perle 61)", image: "https://www.pokepedia.fr/images/thumb/f/f1/Carte_Diamant_%26_Perle_61.png/368px-Carte_Diamant_%26_Perle_61.png" },
+                { id: "riolu4", nom: "Riolu (Diamant & Perle Éveil des Légendes 117)", image: "https://www.pokepedia.fr/images/thumb/0/0e/Carte_Diamant_%26_Perle_%C3%89veil_des_L%C3%A9gendes_117.png/368px-Carte_Diamant_%26_Perle_%C3%89veil_des_L%C3%A9gendes_117.png" },
+                { id: "riolu5", nom: "Riolu (Diamant & Perle Kit Dresseur Lucario 6)", image: "https://www.pokepedia.fr/images/thumb/5/54/Carte_Diamant_%26_Perle_Kit_Dresseur_Lucario_6.png/368px-Carte_Diamant_%26_Perle_Kit_Dresseur_Lucario_6.png" },
+                { id: "riolu6", nom: "Riolu (Écarlate et Violet 112)", image: "https://www.pokepedia.fr/images/0/0d/Carte_%C3%89carlate_et_Violet_112.png" },
+                { id: "riolu7", nom: "Riolu (Écarlate et Violet 113)", image: "https://www.pokepedia.fr/images/9/9c/Carte_%C3%89carlate_et_Violet_113.png" },
+                { id: "riolu8", nom: "Riolu (Écarlate et Violet 215)", image: "https://www.pokepedia.fr/images/8/8b/Carte_%C3%89carlate_et_Violet_215.png" },
+                { id: "riolu9", nom: "Riolu (Écarlate et Violet Couronne Stellaire 081)", image: "https://www.pokepedia.fr/images/7/7a/Carte_%C3%89carlate_et_Violet_Couronne_Stellaire_081.png" },
+                { id: "riolu10", nom: "Riolu (Écarlate et Violet Destinées de Paldea 173)", image: "https://www.pokepedia.fr/images/6/6f/Carte_%C3%89carlate_et_Violet_Destin%C3%A9es_de_Paldea_173.png" },
+                { id: "riolu11", nom: "Riolu (Écarlate et Violet Évolutions Prismatiques 050)", image: "https://www.pokepedia.fr/images/5/5d/Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_050.png" },
+                { id: "riolu12", nom: "Riolu (Épée et Bouclier Stars Étincelantes 078)", image: "https://www.pokepedia.fr/images/4/4c/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_078.png" },
+                { id: "riolu13", nom: "Riolu (Épée et Bouclier Voltage Éclatant 090)", image: "https://www.pokepedia.fr/images/3/3b/Carte_%C3%89p%C3%A9e_et_Bouclier_Voltage_%C3%89clatant_090.png" },
+                { id: "riolu14", nom: "Riolu (HS Déchaînement 60)", image: "https://www.pokepedia.fr/images/2/2a/Carte_HS_D%C3%A9cha%C3%AEnement_60.png" },
+                { id: "riolu15", nom: "Riolu (L'Appel des Légendes 50)", image: "https://www.pokepedia.fr/images/1/19/Carte_L%27Appel_des_L%C3%A9gendes_50.png" },
+                { id: "riolu16", nom: "Riolu (Noir & Blanc Destinées Futures 63)", image: "https://www.pokepedia.fr/images/0/08/Carte_Noir_%26_Blanc_Destin%C3%A9es_Futures_63.png" },
+                { id: "riolu17", nom: "Riolu (Noir & Blanc Tempête Plasma 75)", image: "https://www.pokepedia.fr/images/f/f7/Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_75.png" },
+                { id: "riolu18", nom: "Riolu (Noir & Blanc Tempête Plasma 76)", image: "https://www.pokepedia.fr/images/e/ee/Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_76.png" },
+                { id: "riolu19", nom: "Riolu (Noir & Blanc Trésors Légendaires 79)", image: "https://www.pokepedia.fr/images/d/d6/Carte_Noir_%26_Blanc_Tr%C3%A9sors_L%C3%A9gendaires_79.png" },
+                { id: "riolu20", nom: "Riolu (Platine 91)", image: "https://www.pokepedia.fr/images/c/c5/Carte_Platine_91.png" },
+                { id: "riolu21", nom: "Riolu (POP Series 6 8)", image: "https://www.pokepedia.fr/images/b/b4/Carte_POP_Series_6_8.png" },
+                { id: "riolu22", nom: "Riolu (POP Series 8 16)", image: "https://www.pokepedia.fr/images/a/a3/Carte_POP_Series_8_16.png" },
+                { id: "riolu23", nom: "Riolu (Promo BW 33)", image: "https://www.pokepedia.fr/images/9/92/Carte_Promo_BW_33.png" },
+                { id: "riolu24", nom: "Riolu (Promo McDonald's 2018 24)", image: "https://www.pokepedia.fr/images/8/83/Carte_Promo_McDonald%27s_2018_24.png" },
+                { id: "riolu25", nom: "Riolu (Soleil et Lune Alliance Infaillible 102)", image: "https://www.pokepedia.fr/images/7/7e/Carte_Soleil_et_Lune_Alliance_Infaillible_102.png" },
+                { id: "riolu26", nom: "Riolu (Soleil et Lune Harmonie des Esprits 115)", image: "https://www.pokepedia.fr/images/6/6b/Carte_Soleil_et_Lune_Harmonie_des_Esprits_115.png" },
+                { id: "riolu27", nom: "Riolu (Soleil et Lune Harmonie des Esprits 116)", image: "https://www.pokepedia.fr/images/5/56/Carte_Soleil_et_Lune_Harmonie_des_Esprits_116.png" },
+                { id: "riolu28", nom: "Riolu (Soleil et Lune Ombres Ardentes 70)", image: "https://www.pokepedia.fr/images/4/4d/Carte_Soleil_et_Lune_Ombres_Ardentes_70.png" },
+                { id: "riolu29", nom: "Riolu (Soleil et Lune Ultra-Prisme 66)", image: "https://www.pokepedia.fr/images/3/3d/Carte_Soleil_et_Lune_Ultra-Prisme_66.png" },
+                { id: "riolu30", nom: "Riolu (XY Impact des Destins 45)", image: "https://www.pokepedia.fr/images/2/22/Carte_XY_Impact_des_Destins_45.png" },
+                { id: "riolu31", nom: "Riolu (XY Impact des Destins 46)", image: "https://www.pokepedia.fr/images/1/19/Carte_XY_Impact_des_Destins_46.png" },
+                { id: "riolu32", nom: "Riolu (Zénith Suprême 071)", image: "https://www.pokepedia.fr/images/0/05/Carte_Z%C3%A9nith_Supr%C3%AAme_071.png" },
+                { id: "riolu33", nom: "Riolu (Zénith Suprême GG26)", image: "https://www.pokepedia.fr/images/f/f9/Carte_Z%C3%A9nith_Supr%C3%AAme_GG26.png" }
             ]
         };
 
