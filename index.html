@@ -527,24 +527,13 @@
                 image: "https://www.pokepedia.fr/images/d/d1/Carte_拡張シート.png" }
             ]
         }
+
         function selectUser() {
             const user = document.getElementById("user-select").value;
             localStorage.setItem("selectedUser", user);
             resetPokemonSelection();
             loadPokemonOptions(user);
-            changeBackground(user); // Changer le fond d'écran en fonction de l'utilisateur
         }
-
-        function changeBackground(user) {
-            if (user === "celia") {
-                // Changer le fond pour Célia
-                document.body.style.background = "url('https://media.discordapp.net/attachments/1170400948158468166/1305272306523967528/IMG_20240913_091436.jpg?ex=67c80f50&is=67c6bdd0&hm=1dd4f699fe8796b5c5368ce4598a0ce1f5270e7ad31e77cfb4ed21cb60fe30b7&=&format=webp&width=326&height=326') center center fixed";
-            } else {
-                // Fond par défaut pour tous les autres utilisateurs
-                document.body.style.background = "url('https://wallpapercave.com/wp/wp10311682.jpg') no-repeat center center fixed";
-            }
-        }
-
 
         function loadPokemonOptions(user) {
             const selectPokemon = document.getElementById("pokemon-select");
