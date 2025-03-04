@@ -122,6 +122,15 @@
             display: none; /* Masquer le bouton de fermeture */
         }
 
+        .footer {
+            position: fixed;
+            bottom: 10px; /* Espace par rapport au bas */
+            right: 15px; /* Espace par rapport à la droite */
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+        }
 
     </style>
 </head>
@@ -154,6 +163,8 @@
     </div>
 
     <div class="card-container" id="card-list"></div>
+
+    <div class="footer">©N.V</div>
 
     <script>
         const userPokemon = {
