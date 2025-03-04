@@ -70,6 +70,7 @@
             object-fit: cover;
             border-radius: 10px;
             border: 2px solid #8a2be2;
+            cursor: pointer;
         }
 
         .card p {
@@ -94,17 +95,45 @@
             font-size: 0.9em;
             color: #f0e6ff;
         }
+
+        /* Style pour la carte agrandie */
+        #card-visualization {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: default; /* Permet de cliquer n'importe où pour fermer */
+        }
+
+        #card-visualization img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        #card-visualization .close-button {
+            display: none; /* Masquer le bouton de fermeture */
+        }
+
+
     </style>
 </head>
 <body>
 
-    <h1>Si tu vois ça, dis moi et je mettrai un Easter Egg sur ta page</h1>
+    <h1>Cartalogue Pokémon</h1>
 
     <div class="menu-container" id="user-selection">
         <select id="user-select" onchange="selectUser()">
             <option value="" disabled selected>Choisir votre profil</option>
-            <option value="nathan">Nathan</option>
             <option value="celia">Célia</option>
+            <option value="nathan">Nathan</option>
         </select>
     </div>
 
@@ -129,61 +158,364 @@
     <script>
         const userPokemon = {
             "nathan": ["skelenox", "toutombe"],
-            "celia": ["riolu"]
+            "celia": ["caninos", "chacripan", "farfuret", "flamiaou", "riolu"]
         };
 
         const pokemonData = {
+
             "skelenox": [
-            { id: "skelenox1", nom: "Skélénox (Choc Spatio-Temporel 070)", image: "https://www.pokepedia.fr/images/7/7f/Carte_Choc_Spatio-Temporel_070.png" },
-            { id: "skelenox2", nom: "Skélénox (Diamant & Perle 80)", image: "https://www.pokepedia.fr/images/thumb/4/49/Carte_Diamant_%26_Perle_80.png/368px-Carte_Diamant_%26_Perle_80.png" },
-            { id: "skelenox3", nom: "Skélénox (Diamant & Perle Merveilles Secrètes 86)", image: "https://www.pokepedia.fr/images/thumb/c/c4/Carte_Diamant_%26_Perle_Merveilles_Secr%C3%A8tes_86.png/368px-Carte_Diamant_%26_Perle_Merveilles_Secr%C3%A8tes_86.png" },
-            { id: "skelenox4", nom: "Skélénox (Diamant & Perle Tempête 59)", image: "https://www.pokepedia.fr/images/thumb/7/79/Carte_Diamant_%26_Perle_Temp%C3%AAte_59.png/368px-Carte_Diamant_%26_Perle_Temp%C3%AAte_59.png" },
-            { id: "skelenox5", nom: "Skélénox (Diamant & Perle Tempête 60)", image: "https://www.pokepedia.fr/images/thumb/2/23/Carte_Diamant_%26_Perle_Temp%C3%AAte_60.png/368px-Carte_Diamant_%26_Perle_Temp%C3%AAte_60.png" },
-            { id: "skelenox6", nom: "Skélénox (Diamant & Perle Tempête SH2)", image: "https://www.pokepedia.fr/images/thumb/7/79/Carte_Diamant_%26_Perle_Temp%C3%AAte_SH2.png/368px-Carte_Diamant_%26_Perle_Temp%C3%AAte_SH2.png" },
-            { id: "skelenox7", nom: "Skélénox (Écarlate et Violet Évolutions Prismatiques 035)", image: "https://www.pokepedia.fr/images/thumb/a/a4/Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_035.png/368px-Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_035.png" },
-            { id: "skelenox8", nom: "Skélénox (Écarlate et Violet Fable Nébuleuse 018)", image: "https://www.pokepedia.fr/images/thumb/2/20/Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_018.png/368px-Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_018.png" },
-            { id: "skelenox9", nom: "Skélénox (Écarlate et Violet Fable Nébuleuse 068)", image: "https://www.pokepedia.fr/images/thumb/3/3c/Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_068.png/368px-Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_068.png" },
-            { id: "skelenox10", nom: "Skélénox (Épée et Bouclier Stars Étincelantes 060)", image: "https://www.pokepedia.fr/images/thumb/a/ac/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png" },
+                { id: "skelenox1", nom: "Skélénox (Choc Spatio-Temporel 070)", 
+                image: "https://www.pokepedia.fr/images/7/7f/Carte_Choc_Spatio-Temporel_070.png" },
+                { id: "skelenox2", nom: "Skélénox (Diamant & Perle 80)", 
+                image: "https://www.pokepedia.fr/images/thumb/4/49/Carte_Diamant_%26_Perle_80.png/368px-Carte_Diamant_%26_Perle_80.png" },
+                { id: "skelenox3", nom: "Skélénox (Diamant & Perle Merveilles Secrètes 86)", 
+                image: "https://www.pokepedia.fr/images/thumb/c/c4/Carte_Diamant_%26_Perle_Merveilles_Secr%C3%A8tes_86.png/368px-Carte_Diamant_%26_Perle_Merveilles_Secr%C3%A8tes_86.png" },
+                { id: "skelenox4", nom: "Skélénox (Diamant & Perle Tempête 59)", 
+                image: "https://www.pokepedia.fr/images/thumb/7/79/Carte_Diamant_%26_Perle_Temp%C3%AAte_59.png/368px-Carte_Diamant_%26_Perle_Temp%C3%AAte_59.png" },
+                { id: "skelenox5", nom: "Skélénox (Diamant & Perle Tempête 60)", 
+                image: "https://www.pokepedia.fr/images/thumb/2/23/Carte_Diamant_%26_Perle_Temp%C3%AAte_60.png/368px-Carte_Diamant_%26_Perle_Temp%C3%AAte_60.png" },
+                { id: "skelenox6", nom: "Skélénox (Diamant & Perle Tempête SH2)", 
+                image: "https://www.pokepedia.fr/images/thumb/7/79/Carte_Diamant_%26_Perle_Temp%C3%AAte_SH2.png/368px-Carte_Diamant_%26_Perle_Temp%C3%AAte_SH2.png" },
+                { id: "skelenox7", nom: "Skélénox (Écarlate et Violet Évolutions Prismatiques 035)", 
+                image: "https://www.pokepedia.fr/images/thumb/a/a4/Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_035.png/368px-Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_035.png" },
+                { id: "skelenox8", nom: "Skélénox (Écarlate et Violet Fable Nébuleuse 018)", 
+                image: "https://www.pokepedia.fr/images/thumb/2/20/Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_018.png/368px-Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_018.png" },
+                { id: "skelenox9", nom: "Skélénox (Écarlate et Violet Fable Nébuleuse 068)", 
+                image: "https://www.pokepedia.fr/images/thumb/3/3c/Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_068.png/368px-Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_068.png" },
+                { id: "skelenox10", nom: "Skélénox (Épée et Bouclier Stars Étincelantes 060)", 
+                image: "https://www.pokepedia.fr/images/thumb/a/ac/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_060.png" },
             ],
+
             "toutombe": [
                 { id: "toutombe1", nom: "Toutombe (Écarlate et Violet 104)", image: "https://www.pokepedia.fr/images/thumb/d/d0/Carte_%C3%89carlate_et_Violet_104.png/368px-Carte_%C3%89carlate_et_Violet_104.png" }
             ],
+
             "riolu": [
-                { id: "riolu1", nom: "Riolu (Choc Spatio-Temporel 091)", image: "https://www.pokepedia.fr/images/5/5c/Carte_Choc_Spatio-Temporel_091.png" },
-                { id: "riolu2", nom: "Riolu (Destinées Occultes SV21)", image: "https://www.pokepedia.fr/images/thumb/d/db/Carte_Destin%C3%A9es_Occultes_SV21.png/368px-Carte_Destin%C3%A9es_Occultes_SV21.png" },
-                { id: "riolu3", nom: "Riolu (Diamant & Perle 61)", image: "https://www.pokepedia.fr/images/thumb/f/f1/Carte_Diamant_%26_Perle_61.png/368px-Carte_Diamant_%26_Perle_61.png" },
-                { id: "riolu4", nom: "Riolu (Diamant & Perle Éveil des Légendes 117)", image: "https://www.pokepedia.fr/images/thumb/0/0e/Carte_Diamant_%26_Perle_%C3%89veil_des_L%C3%A9gendes_117.png/368px-Carte_Diamant_%26_Perle_%C3%89veil_des_L%C3%A9gendes_117.png" },
-                { id: "riolu5", nom: "Riolu (Diamant & Perle Kit Dresseur Lucario 6)", image: "https://www.pokepedia.fr/images/thumb/5/54/Carte_Diamant_%26_Perle_Kit_Dresseur_Lucario_6.png/368px-Carte_Diamant_%26_Perle_Kit_Dresseur_Lucario_6.png" },
-                { id: "riolu6", nom: "Riolu (Écarlate et Violet 112)", image: "https://www.pokepedia.fr/images/0/0d/Carte_%C3%89carlate_et_Violet_112.png" },
-                { id: "riolu7", nom: "Riolu (Écarlate et Violet 113)", image: "https://www.pokepedia.fr/images/9/9c/Carte_%C3%89carlate_et_Violet_113.png" },
-                { id: "riolu8", nom: "Riolu (Écarlate et Violet 215)", image: "https://www.pokepedia.fr/images/8/8b/Carte_%C3%89carlate_et_Violet_215.png" },
-                { id: "riolu9", nom: "Riolu (Écarlate et Violet Couronne Stellaire 081)", image: "https://www.pokepedia.fr/images/7/7a/Carte_%C3%89carlate_et_Violet_Couronne_Stellaire_081.png" },
-                { id: "riolu10", nom: "Riolu (Écarlate et Violet Destinées de Paldea 173)", image: "https://www.pokepedia.fr/images/6/6f/Carte_%C3%89carlate_et_Violet_Destin%C3%A9es_de_Paldea_173.png" },
-                { id: "riolu11", nom: "Riolu (Écarlate et Violet Évolutions Prismatiques 050)", image: "https://www.pokepedia.fr/images/5/5d/Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_050.png" },
-                { id: "riolu12", nom: "Riolu (Épée et Bouclier Stars Étincelantes 078)", image: "https://www.pokepedia.fr/images/4/4c/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_078.png" },
-                { id: "riolu13", nom: "Riolu (Épée et Bouclier Voltage Éclatant 090)", image: "https://www.pokepedia.fr/images/3/3b/Carte_%C3%89p%C3%A9e_et_Bouclier_Voltage_%C3%89clatant_090.png" },
-                { id: "riolu14", nom: "Riolu (HS Déchaînement 60)", image: "https://www.pokepedia.fr/images/2/2a/Carte_HS_D%C3%A9cha%C3%AEnement_60.png" },
-                { id: "riolu15", nom: "Riolu (L'Appel des Légendes 50)", image: "https://www.pokepedia.fr/images/1/19/Carte_L%27Appel_des_L%C3%A9gendes_50.png" },
-                { id: "riolu16", nom: "Riolu (Noir & Blanc Destinées Futures 63)", image: "https://www.pokepedia.fr/images/0/08/Carte_Noir_%26_Blanc_Destin%C3%A9es_Futures_63.png" },
-                { id: "riolu17", nom: "Riolu (Noir & Blanc Tempête Plasma 75)", image: "https://www.pokepedia.fr/images/f/f7/Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_75.png" },
-                { id: "riolu18", nom: "Riolu (Noir & Blanc Tempête Plasma 76)", image: "https://www.pokepedia.fr/images/e/ee/Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_76.png" },
-                { id: "riolu19", nom: "Riolu (Noir & Blanc Trésors Légendaires 79)", image: "https://www.pokepedia.fr/images/d/d6/Carte_Noir_%26_Blanc_Tr%C3%A9sors_L%C3%A9gendaires_79.png" },
-                { id: "riolu20", nom: "Riolu (Platine 91)", image: "https://www.pokepedia.fr/images/c/c5/Carte_Platine_91.png" },
-                { id: "riolu21", nom: "Riolu (POP Series 6 8)", image: "https://www.pokepedia.fr/images/b/b4/Carte_POP_Series_6_8.png" },
-                { id: "riolu22", nom: "Riolu (POP Series 8 16)", image: "https://www.pokepedia.fr/images/a/a3/Carte_POP_Series_8_16.png" },
-                { id: "riolu23", nom: "Riolu (Promo BW 33)", image: "https://www.pokepedia.fr/images/9/92/Carte_Promo_BW_33.png" },
-                { id: "riolu24", nom: "Riolu (Promo McDonald's 2018 24)", image: "https://www.pokepedia.fr/images/8/83/Carte_Promo_McDonald%27s_2018_24.png" },
-                { id: "riolu25", nom: "Riolu (Soleil et Lune Alliance Infaillible 102)", image: "https://www.pokepedia.fr/images/7/7e/Carte_Soleil_et_Lune_Alliance_Infaillible_102.png" },
-                { id: "riolu26", nom: "Riolu (Soleil et Lune Harmonie des Esprits 115)", image: "https://www.pokepedia.fr/images/6/6b/Carte_Soleil_et_Lune_Harmonie_des_Esprits_115.png" },
-                { id: "riolu27", nom: "Riolu (Soleil et Lune Harmonie des Esprits 116)", image: "https://www.pokepedia.fr/images/5/56/Carte_Soleil_et_Lune_Harmonie_des_Esprits_116.png" },
-                { id: "riolu28", nom: "Riolu (Soleil et Lune Ombres Ardentes 70)", image: "https://www.pokepedia.fr/images/4/4d/Carte_Soleil_et_Lune_Ombres_Ardentes_70.png" },
-                { id: "riolu29", nom: "Riolu (Soleil et Lune Ultra-Prisme 66)", image: "https://www.pokepedia.fr/images/3/3d/Carte_Soleil_et_Lune_Ultra-Prisme_66.png" },
-                { id: "riolu30", nom: "Riolu (XY Impact des Destins 45)", image: "https://www.pokepedia.fr/images/2/22/Carte_XY_Impact_des_Destins_45.png" },
-                { id: "riolu31", nom: "Riolu (XY Impact des Destins 46)", image: "https://www.pokepedia.fr/images/1/19/Carte_XY_Impact_des_Destins_46.png" },
-                { id: "riolu32", nom: "Riolu (Zénith Suprême 071)", image: "https://www.pokepedia.fr/images/0/05/Carte_Z%C3%A9nith_Supr%C3%AAme_071.png" },
-                { id: "riolu33", nom: "Riolu (Zénith Suprême GG26)", image: "https://www.pokepedia.fr/images/f/f9/Carte_Z%C3%A9nith_Supr%C3%AAme_GG26.png" }
+                { id: "riolu1", nom: "Riolu (Choc Spatio-Temporel 091)", 
+                image: "https://www.pokepedia.fr/images/5/5c/Carte_Choc_Spatio-Temporel_091.png" },
+                { id: "riolu2", nom: "Riolu (Destinées Occultes SV21)", 
+                image: "https://www.pokepedia.fr/images/thumb/d/db/Carte_Destin%C3%A9es_Occultes_SV21.png/368px-Carte_Destin%C3%A9es_Occultes_SV21.png" },
+                { id: "riolu3", nom: "Riolu (Diamant & Perle 61)", 
+                image: "https://www.pokepedia.fr/images/thumb/f/f1/Carte_Diamant_%26_Perle_61.png/368px-Carte_Diamant_%26_Perle_61.png" },
+                { id: "riolu4", nom: "Riolu (Diamant & Perle Éveil des Légendes 117)", 
+                image: "https://www.pokepedia.fr/images/thumb/0/0e/Carte_Diamant_%26_Perle_%C3%89veil_des_L%C3%A9gendes_117.png/368px-Carte_Diamant_%26_Perle_%C3%89veil_des_L%C3%A9gendes_117.png" },
+                { id: "riolu5", nom: "Riolu (Diamant & Perle Kit Dresseur Lucario 6)", 
+                image: "https://www.pokepedia.fr/images/thumb/5/54/Carte_Diamant_%26_Perle_Kit_Dresseur_Lucario_6.png/368px-Carte_Diamant_%26_Perle_Kit_Dresseur_Lucario_6.png" },
+                { id: "riolu6", nom: "Riolu (Écarlate et Violet 112)", 
+                image: "https://www.pokepedia.fr/images/0/0d/Carte_%C3%89carlate_et_Violet_112.png" },
+                { id: "riolu7", nom: "Riolu (Écarlate et Violet 113)", 
+                image: "https://www.pokepedia.fr/images/9/9c/Carte_%C3%89carlate_et_Violet_113.png" },
+                { id: "riolu8", nom: "Riolu (Écarlate et Violet 215)", 
+                image: "https://www.pokepedia.fr/images/8/8b/Carte_%C3%89carlate_et_Violet_215.png" },
+                { id: "riolu9", nom: "Riolu (Écarlate et Violet Couronne Stellaire 081)", 
+                image: "https://www.pokepedia.fr/images/7/7a/Carte_%C3%89carlate_et_Violet_Couronne_Stellaire_081.png" },
+                { id: "riolu10", nom: "Riolu (Écarlate et Violet Destinées de Paldea 173)", 
+                image: "https://www.pokepedia.fr/images/6/6f/Carte_%C3%89carlate_et_Violet_Destin%C3%A9es_de_Paldea_173.png" },
+                { id: "riolu11", nom: "Riolu (Écarlate et Violet Évolutions Prismatiques 050)", 
+                image: "https://www.pokepedia.fr/images/5/5d/Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_050.png" },
+                { id: "riolu12", nom: "Riolu (Épée et Bouclier Stars Étincelantes 078)", 
+                image: "https://www.pokepedia.fr/images/4/4c/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_078.png" },
+                { id: "riolu13", nom: "Riolu (Épée et Bouclier Voltage Éclatant 090)", 
+                image: "https://www.pokepedia.fr/images/3/3b/Carte_%C3%89p%C3%A9e_et_Bouclier_Voltage_%C3%89clatant_090.png" },
+                { id: "riolu14", nom: "Riolu (HS Déchaînement 60)", 
+                image: "https://www.pokepedia.fr/images/2/2a/Carte_HS_D%C3%A9cha%C3%AEnement_60.png" },
+                { id: "riolu15", nom: "Riolu (L'Appel des Légendes 50)", 
+                image: "https://www.pokepedia.fr/images/1/19/Carte_L%27Appel_des_L%C3%A9gendes_50.png" },
+                { id: "riolu16", nom: "Riolu (Noir & Blanc Destinées Futures 63)", 
+                image: "https://www.pokepedia.fr/images/0/08/Carte_Noir_%26_Blanc_Destin%C3%A9es_Futures_63.png" },
+                { id: "riolu17", nom: "Riolu (Noir & Blanc Tempête Plasma 75)", 
+                image: "https://www.pokepedia.fr/images/f/f7/Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_75.png" },
+                { id: "riolu18", nom: "Riolu (Noir & Blanc Tempête Plasma 76)", 
+                image: "https://www.pokepedia.fr/images/e/ee/Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_76.png" },
+                { id: "riolu19", nom: "Riolu (Noir & Blanc Trésors Légendaires 79)", 
+                image: "https://www.pokepedia.fr/images/d/d6/Carte_Noir_%26_Blanc_Tr%C3%A9sors_L%C3%A9gendaires_79.png" },
+                { id: "riolu20", nom: "Riolu (Platine 91)", 
+                image: "https://www.pokepedia.fr/images/c/c5/Carte_Platine_91.png" },
+                { id: "riolu21", nom: "Riolu (POP Series 6 8)", 
+                image: "https://www.pokepedia.fr/images/b/b4/Carte_POP_Series_6_8.png" },
+                { id: "riolu22", nom: "Riolu (POP Series 8 16)", 
+                image: "https://www.pokepedia.fr/images/a/a3/Carte_POP_Series_8_16.png" },
+                { id: "riolu23", nom: "Riolu (Promo BW 33)", 
+                image: "https://www.pokepedia.fr/images/9/92/Carte_Promo_BW_33.png" },
+                { id: "riolu24", nom: "Riolu (Promo McDonald's 2018 24)", 
+                image: "https://www.pokepedia.fr/images/8/83/Carte_Promo_McDonald%27s_2018_24.png" },
+                { id: "riolu25", nom: "Riolu (Soleil et Lune Alliance Infaillible 102)", 
+                image: "https://www.pokepedia.fr/images/7/7e/Carte_Soleil_et_Lune_Alliance_Infaillible_102.png" },
+                { id: "riolu26", nom: "Riolu (Soleil et Lune Harmonie des Esprits 115)", 
+                image: "https://www.pokepedia.fr/images/6/6b/Carte_Soleil_et_Lune_Harmonie_des_Esprits_115.png" },
+                { id: "riolu27", nom: "Riolu (Soleil et Lune Harmonie des Esprits 116)", 
+                image: "https://www.pokepedia.fr/images/5/56/Carte_Soleil_et_Lune_Harmonie_des_Esprits_116.png" },
+                { id: "riolu28", nom: "Riolu (Soleil et Lune Ombres Ardentes 70)", 
+                image: "https://www.pokepedia.fr/images/4/4d/Carte_Soleil_et_Lune_Ombres_Ardentes_70.png" },
+                { id: "riolu29", nom: "Riolu (Soleil et Lune Ultra-Prisme 66)", 
+                image: "https://www.pokepedia.fr/images/3/3d/Carte_Soleil_et_Lune_Ultra-Prisme_66.png" },
+                { id: "riolu30", nom: "Riolu (XY Impact des Destins 45)", 
+                image: "https://www.pokepedia.fr/images/2/22/Carte_XY_Impact_des_Destins_45.png" },
+                { id: "riolu31", nom: "Riolu (XY Impact des Destins 46)", 
+                image: "https://www.pokepedia.fr/images/1/19/Carte_XY_Impact_des_Destins_46.png" },
+                { id: "riolu32", nom: "Riolu (Zénith Suprême 071)", 
+                image: "https://www.pokepedia.fr/images/0/05/Carte_Z%C3%A9nith_Supr%C3%AAme_071.png" },
+                { id: "riolu33", nom: "Riolu (Zénith Suprême GG26)", 
+                image: "https://www.pokepedia.fr/images/f/f9/Carte_Z%C3%A9nith_Supr%C3%AAme_GG26.png" }
+            ],
+
+            "flamiaou": [
+                { id: "flamiaou1", nom: "Flamiaou (Écarlate et Violet Forces Temporelles 032)", 
+                image: "https://www.pokepedia.fr/images/thumb/b/b9/Carte_%C3%89carlate_et_Violet_Forces_Temporelles_032.png/368px-Carte_%C3%89carlate_et_Violet_Forces_Temporelles_032.png" },
+                { id: "flamiaou2", nom: "Flamiaou (Écarlate et Violet Forces Temporelles 167)", 
+                image: "https://www.pokepedia.fr/images/thumb/a/a4/Carte_%C3%89carlate_et_Violet_Forces_Temporelles_167.png/368px-Carte_%C3%89carlate_et_Violet_Forces_Temporelles_167.png" },
+                { id: "flamiaou3", nom: "Flamiaou (Épée et Bouclier Tempête Argentée 030)", 
+                image: "https://www.pokepedia.fr/images/thumb/6/60/Carte_%C3%89p%C3%A9e_et_Bouclier_Temp%C3%AAte_Argent%C3%A9e_030.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_Temp%C3%AAte_Argent%C3%A9e_030.png" },
+                { id: "flamiaou4", nom: "Flamiaou (Légendes Brillantes 15)", 
+                image: "https://www.pokepedia.fr/images/thumb/9/94/Carte_L%C3%A9gendes_Brillantes_15.png/368px-Carte_L%C3%A9gendes_Brillantes_15.png" },
+                { id: "flamiaou5", nom: "Flamiaou (Majesté des Dragons 12)", 
+                image: "https://www.pokepedia.fr/images/thumb/5/56/Carte_Majest%C3%A9_des_Dragons_12.png/368px-Carte_Majest%C3%A9_des_Dragons_12.png" },
+                { id: "flamiaou6", nom: "Flamiaou (Promo McDonald's 2017 3)", 
+                image: "https://www.pokepedia.fr/images/thumb/0/08/Carte_Promo_McDonald%27s_2017_3.png/368px-Carte_Promo_McDonald%27s_2017_3.png" },
+                { id: "flamiaou7", nom: "Flamiaou (Promo McDonald's 2021 15)", 
+                image: "https://assets.lastdodo.com/image/ld_medium/plain/assets/catalog/assets/2021/4/16/c/b/4/pdf_cb48431c-9e51-11eb-87d3-abcc756cc189.jpg" },
+                { id: "flamiaou8", nom: "Flamiaou (Promo SM 02)", 
+                image: "https://www.pokepedia.fr/images/thumb/d/d9/Carte_Promo_SM_SM02.png/368px-Carte_Promo_SM_SM02.png" },
+                { id: "flamiaou9", nom: "Flamiaou (Promo SM 08)", 
+                image: "https://www.pokepedia.fr/images/thumb/4/4f/Carte_Promo_SM_SM08.png/368px-Carte_Promo_SM_SM08.png" },
+                { id: "flamiaou10", nom: "Flamiaou (Promo SM 23)", 
+                image: "https://www.pokepedia.fr/images/thumb/3/38/Carte_Promo_SM_SM23.png/368px-Carte_Promo_SM_SM23.png" },
+                { id: "flamiaou11", nom: "Flamiaou (Soleil et Lune 24)", 
+                image: "https://www.pokepedia.fr/images/thumb/e/ee/Carte_Soleil_et_Lune_24.png/368px-Carte_Soleil_et_Lune_24.png" },
+                { id: "flamiaou12", nom: "Flamiaou (Soleil et Lune Alliance Infaillible 26)", 
+                image: "https://www.pokepedia.fr/images/thumb/3/38/Carte_Soleil_et_Lune_Alliance_Infaillible_26.png/368px-Carte_Soleil_et_Lune_Alliance_Infaillible_26.png" },
+                { id: "flamiaou13", nom: "Flamiaou (Soleil et Lune Alliance Infaillible 27)", 
+                image: "https://www.pokepedia.fr/images/thumb/a/aa/Carte_Soleil_et_Lune_Alliance_Infaillible_27.png/368px-Carte_Soleil_et_Lune_Alliance_Infaillible_27.png" },
+                { id: "flamiaou14", nom: "Flamiaou (Soleil et Lune Duo de Choc 20)", 
+                image: "https://www.pokepedia.fr/images/thumb/f/ff/Carte_Soleil_et_Lune_Duo_de_Choc_20.png/647px-Carte_Soleil_et_Lune_Duo_de_Choc_20.png?20200530211810" },
+                { id: "flamiaou15", nom: "Flamiaou JAP (Soleil et Lune Promo 059)", 
+                image: "https://www.pokepedia.fr/images/thumb/d/d9/Carte_SM-P_Promotional_059.png/368px-Carte_SM-P_Promotional_059.png" },
+                { id: "flamiaou16", nom: "Flamiaou JAP (Soleil et Lune Promo 172)", 
+                image: "https://www.pokepedia.fr/images/thumb/3/3d/Carte_SM-P_Promotional_172.png/368px-Carte_SM-P_Promotional_172.png" },
+                { id: "flamiaou17", nom: "Flamiaou JAP (Soleil et Lune Promo 259)", 
+                image: "https://www.pokepedia.fr/images/thumb/7/71/Carte_SM-P_Promotional_259.png/368px-Carte_SM-P_Promotional_259.png" },
+                { id: "flamiaou18", nom: "Flamiaou JAP (Soleil et Lune Promo 374)", 
+                image: "https://www.pokepedia.fr/images/thumb/e/e8/Carte_SM-P_Promotional_374.png/368px-Carte_SM-P_Promotional_374.png" }
+            ],
+
+            farfuret: [
+                { id: "farfuret1", nom: "Farfuret (Aquapolis 110)", 
+                image: "https://www.pokepedia.fr/images/thumb/7/78/Carte_Aquapolis_110.png/368px-Carte_Aquapolis_110.png" },
+                { id: "farfuret2", nom: "Farfuret (Choc Spatio-Temporel 098)", 
+                image: "https://www.pokepedia.fr/images/4/45/Carte_Choc_Spatio-Temporel_098.png" },
+                { id: "farfuret3", nom: "Farfuret (Diamant & Perle 100)", 
+                image: "https://www.pokepedia.fr/images/thumb/a/a8/Carte_Diamant_%26_Perle_100.png/368px-Carte_Diamant_%26_Perle_100.png" },
+                { id: "farfuret4", nom: "Farfuret (Diamant & Perle Éveil des Légendes 120)", 
+                image: "https://www.pokepedia.fr/images/thumb/0/08/Carte_Diamant_%26_Perle_%C3%89veil_des_L%C3%A9gendes_120.png/368px-Carte_Diamant_%26_Perle_%C3%89veil_des_L%C3%A9gendes_120.png" },
+                { id: "farfuret5", nom: "Farfuret (Écarlate et Violet Destinées de Paldea 182)", 
+                image: "https://www.pokepedia.fr/images/thumb/e/ea/Carte_%C3%89carlate_et_Violet_Destin%C3%A9es_de_Paldea_182.png/368px-Carte_%C3%89carlate_et_Violet_Destin%C3%A9es_de_Paldea_182.png" },
+                { id: "farfuret6", nom: "Farfuret (Écarlate et Violet Évolutions à Paldea 133)", 
+                image: "https://www.pokepedia.fr/images/thumb/4/4d/Carte_%C3%89carlate_et_Violet_%C3%89volutions_%C3%A0_Paldea_133.png/368px-Carte_%C3%89carlate_et_Violet_%C3%89volutions_%C3%A0_Paldea_133.png" },
+                { id: "farfuret7", nom: "Farfuret (Écarlate et Violet Évolutions Prismatiques 061)", 
+                image: "https://www.pokepedia.fr/images/thumb/a/af/Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_061.png/368px-Carte_%C3%89carlate_et_Violet_%C3%89volutions_Prismatiques_061.png" },
+                { id: "farfuret8", nom: "Farfuret (Écarlate et Violet Fable Nébuleuse 013)", 
+                image: "https://www.pokepedia.fr/images/thumb/1/16/Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_013.png/368px-Carte_%C3%89carlate_et_Violet_Fable_N%C3%A9buleuse_013.png" },
+                { id: "farfuret9", nom: "Farfuret (Épée et Bouclier Règne de Glace 030)", 
+                image: "https://www.pokepedia.fr/images/thumb/5/5c/Carte_%C3%89p%C3%A9e_et_Bouclier_R%C3%A8gne_de_Glace_030.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_R%C3%A8gne_de_Glace_030.png" },
+                { id: "farfuret10", nom: "Farfuret (Épée et Bouclier Stars Étincelantes 086)", 
+                image: "https://www.pokepedia.fr/images/thumb/7/73/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_086.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_086.png" },
+                { id: "farfuret11", nom: "Farfuret (HS Indomptable 68)", 
+                image: "https://www.pokepedia.fr/images/thumb/6/64/Carte_HS_Indomptable_68.png/368px-Carte_HS_Indomptable_68.png" },
+                { id: "farfuret12", nom: "Farfuret (Neo Genesis 25)", 
+                image: "https://www.pokepedia.fr/images/thumb/4/4d/Carte_Neo_Genesis_25.png/368px-Carte_Neo_Genesis_25.png" },
+                { id: "farfuret13", nom: "Farfuret (Neo Revelation 24)", 
+                image: "https://www.pokepedia.fr/images/thumb/6/63/Carte_Neo_Revelation_24.png/368px-Carte_Neo_Revelation_24.png" },
+                { id: "farfuret14", nom: "Farfuret (Noir & Blanc Destinées Futures 69)", 
+                image: "https://www.pokepedia.fr/images/thumb/9/96/Carte_Noir_%26_Blanc_Destin%C3%A9es_Futures_69.png/368px-Carte_Noir_%26_Blanc_Destin%C3%A9es_Futures_69.png" },
+                { id: "farfuret15", nom: "Farfuret (Noir & Blanc Glaciation Plasma 65)", 
+                image: "https://www.pokepedia.fr/images/thumb/6/64/Carte_Noir_%26_Blanc_Glaciation_Plasma_65.png/368px-Carte_Noir_%26_Blanc_Glaciation_Plasma_65.png" },
+                { id: "farfuret16", nom: "Farfuret (Promo McDonald's 2018 28)", 
+                image: "https://www.pokepedia.fr/images/thumb/d/da/Carte_Promo_McDonald%27s_2018_28.png/368px-Carte_Promo_McDonald%27s_2018_28.png" },
+                { id: "farfuret17", nom: "Farfuret (Soleil et Lune Éclipse Cosmique 43)", 
+                image: "https://www.pokepedia.fr/images/thumb/a/a9/Carte_Soleil_et_Lune_%C3%89clipse_Cosmique_43.png/368px-Carte_Soleil_et_Lune_%C3%89clipse_Cosmique_43.png" },
+                { id: "farfuret18", nom: "Farfuret (Soleil et Lune Harmonie des Esprits 131)", 
+                image: "https://www.pokepedia.fr/images/thumb/5/50/Carte_Soleil_et_Lune_Harmonie_des_Esprits_131.png/368px-Carte_Soleil_et_Lune_Harmonie_des_Esprits_131.png" },
+                { id: "farfuret19", nom: "Farfuret (Soleil et Lune Ombres Ardentes 85)", 
+                image: "https://www.pokepedia.fr/images/thumb/e/e7/Carte_Soleil_et_Lune_Ombres_Ardentes_85.png/368px-Carte_Soleil_et_Lune_Ombres_Ardentes_85.png" },
+                { id: "farfuret20", nom: "Farfuret (Soleil et Lune Tempête Céleste 86)", 
+                image: "https://www.pokepedia.fr/images/thumb/2/23/Carte_Soleil_et_Lune_Temp%C3%AAte_C%C3%A9leste_86.png/368px-Carte_Soleil_et_Lune_Temp%C3%AAte_C%C3%A9leste_86.png" },
+                { id: "farfuret21", nom: "Farfuret (Soleil et Lune Ultra-Prisme 73)", 
+                image: "https://www.pokepedia.fr/images/thumb/9/93/Carte_Soleil_et_Lune_Ultra-Prisme_73.png/368px-Carte_Soleil_et_Lune_Ultra-Prisme_73.png" },
+                { id: "farfuret22", nom: "Farfuret (XY Étincelles 50)", 
+                image: "https://www.pokepedia.fr/images/thumb/4/44/Carte_XY_%C3%89tincelles_50.png/368px-Carte_XY_%C3%89tincelles_50.png" },
+                { id: "farfuret23", nom: "Farfuret (XY Étincelles 51)", 
+                image: "https://www.pokepedia.fr/images/thumb/2/24/Carte_XY_%C3%89tincelles_51.png/368px-Carte_XY_%C3%89tincelles_51.png" },
+                { id: "farfuret24", nom: "Farfuret (XY Offensive Vapeur 60)", 
+                image: "https://www.pokepedia.fr/images/thumb/e/e8/Carte_XY_Offensive_Vapeur_60.png/368px-Carte_XY_Offensive_Vapeur_60.png" },
+                { id: "farfuret25", nom: "Farfuret ex (EX Rubis & Saphir 103)", 
+                image: "https://www.pokepedia.fr/images/thumb/e/ea/Carte_EX_Rubis_%26_Saphir_103.png/368px-Carte_EX_Rubis_%26_Saphir_103.png" },
+                { id: "farfuret26", nom: "Rocket's Sneasel (Best of Game 5)", 
+                image: "https://www.pokepedia.fr/images/thumb/0/0f/Carte_Best_of_Game_5.png/368px-Carte_Best_of_Game_5.png" },
+                { id: "farfuret27", nom: "Rocket's Sneasel ex (EX Team Rocket Returns 103)", 
+                image: "https://www.pokepedia.fr/images/thumb/5/59/Carte_EX_Team_Rocket_Returns_103.png/368px-Carte_EX_Team_Rocket_Returns_103.png" },
+                { id: "farfuret28", nom: "Farfuret JAP (P Promo 036)", 
+                image: "https://www.pokepedia.fr/images/thumb/3/3c/Carte_P_Promotional_036.png/368px-Carte_P_Promotional_036.png" },
+                { id: "farfuret29", nom: "Farfuret JAP (ポケモンカード★VS 043)", 
+                image: "https://www.pokepedia.fr/images/thumb/5/58/Carte_Pokemon_K%C4%81do_%E2%98%85_VS_043.png/368px-Carte_Pokemon_K%C4%81do_%E2%98%85_VS_043.png" }
+            ],
+
+            "chacripan": [
+
+                { id: "chacripan1", nom: "Chacripan (Écarlate et Violet Faille Paradoxe 114)", 
+                image: "https://www.pokepedia.fr/images/thumb/1/1d/Carte_%C3%89carlate_et_Violet_Faille_Paradoxe_114.png/368px-Carte_%C3%89carlate_et_Violet_Faille_Paradoxe_114.png" },
+                { id: "chacripan2", nom: "Chacripan (Épée et Bouclier Stars Étincelantes 090)", 
+                image: "https://www.pokepedia.fr/images/thumb/d/dd/Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_090.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_Stars_%C3%89tincelantes_090.png" },
+                { id: "chacripan3", nom: "Chacripan (Épée et Bouclier Ténèbres Embrasées 106)", 
+                image: "https://www.pokepedia.fr/images/thumb/3/3b/Carte_%C3%89p%C3%A9e_et_Bouclier_T%C3%A9n%C3%A8bres_Embras%C3%A9es_106.png/368px-Carte_%C3%89p%C3%A9e_et_Bouclier_T%C3%A9n%C3%A8bres_Embras%C3%A9es_106.png" },
+                { id: "chacripan4", nom: "Chacripan (L'Île Fabuleuse 051)", 
+                image: "https://www.pokepedia.fr/images/e/ea/Carte_L%27%C3%8Ele_Fabuleuse_051.png" },
+                { id: "chacripan5", nom: "Chacripan (La Voie du Maître 039)", 
+                image: "https://www.pokepedia.fr/images/thumb/5/51/Carte_La_Voie_du_Ma%C3%AEtre_039.png/368px-Carte_La_Voie_du_Ma%C3%AEtre_039.png" },
+                { id: "chacripan6", nom: "Chacripan (Légendes Brillantes 48)", 
+                image: "https://www.pokepedia.fr/images/thumb/d/d5/Carte_L%C3%A9gendes_Brillantes_48.png/368px-Carte_L%C3%A9gendes_Brillantes_48.png" },
+                { id: "chacripan7", nom: "Chacripan (Noir & Blanc 66)", 
+                image: "https://www.pokepedia.fr/images/thumb/7/75/Carte_Noir_%26_Blanc_66.png/368px-Carte_Noir_%26_Blanc_66.png" },
+                { id: "chacripan8", nom: "Chacripan (Noir & Blanc Frontières Franchies 90)", 
+                image: "https://www.pokepedia.fr/images/thumb/a/a5/Carte_Noir_%26_Blanc_Fronti%C3%A8res_Franchies_90.png/368px-Carte_Noir_%26_Blanc_Fronti%C3%A8res_Franchies_90.png" },
+                { id: "chacripan9", nom: "Chacripan (Noir & Blanc Kit du Dresseur Zoroark 1)", 
+                image: "https://www.pokepedia.fr/images/thumb/5/5b/Carte_Noir_%26_Blanc_Kit_du_Dresseur_Zoroark_1.png/368px-Carte_Noir_%26_Blanc_Kit_du_Dresseur_Zoroark_1.png" },
+                { id: "chacripan10", nom: "Chacripan (Noir & Blanc Kit du Dresseur Zoroark 25)", 
+                image: "https://www.pokepedia.fr/images/thumb/b/b2/Carte_Noir_%26_Blanc_Kit_du_Dresseur_Zoroark_25.png/368px-Carte_Noir_%26_Blanc_Kit_du_Dresseur_Zoroark_25.png" },
+                { id: "chacripan11", nom: "Chacripan (Noir & Blanc Pouvoirs Émergents 64)", 
+                image: "https://www.pokepedia.fr/images/thumb/2/22/Carte_Noir_%26_Blanc_Pouvoirs_%C3%89mergents_64.png/368px-Carte_Noir_%26_Blanc_Pouvoirs_%C3%89mergents_64.png" },
+                { id: "chacripan12", nom: "Chacripan (Noir & Blanc Tempête Plasma 82)", 
+                image: "https://www.pokepedia.fr/images/thumb/9/90/Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_82.png/368px-Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_82.png" },
+                { id: "chacripan13", nom: "Chacripan (Noir & Blanc Tempête Plasma 83)", 
+                image: "https://www.pokepedia.fr/images/thumb/5/50/Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_83.png/368px-Carte_Noir_%26_Blanc_Temp%C3%AAte_Plasma_83.png" },
+                { id: "chacripan14", nom: "Chacripan (Noir & Blanc Trésors Légendaires RC13)", 
+                image: "https://www.pokepedia.fr/images/thumb/2/24/Carte_Noir_%26_Blanc_Tr%C3%A9sors_L%C3%A9gendaires_RC13.png/368px-Carte_Noir_%26_Blanc_Tr%C3%A9sors_L%C3%A9gendaires_RC13.png" },
+                { id: "chacripan15", nom: "Chacripan (Soleil et Lune Harmonie des Esprits 135)", 
+                image: "https://www.pokepedia.fr/images/thumb/b/b9/Carte_Soleil_et_Lune_Harmonie_des_Esprits_135.png/368px-Carte_Soleil_et_Lune_Harmonie_des_Esprits_135.png" },
+                { id: "chacripan16", nom: "Chacripan (XY Vigueur Spectrale 56)", 
+                image: "https://www.pokepedia.fr/images/thumb/3/37/Carte_XY_Vigueur_Spectrale_56.png/368px-Carte_XY_Vigueur_Spectrale_56.png" },
+                { id: "chacripan17", nom: "Chacripan (Zénith Suprême 077)", 
+                image: "https://www.pokepedia.fr/images/thumb/7/73/Carte_Z%C3%A9nith_Supr%C3%AAme_077.png/368px-Carte_Z%C3%A9nith_Supr%C3%AAme_077.png" }
+            ],
+
+            "caninos": [
+                { id: "caninos1", nom: "Blaine's Growlithe (Gym Challenge 62)", 
+                image: "https://www.pokepedia.fr/images/4/46/Carte_Gym_Challenge_62.png" },
+
+                { id: "caninos2", nom: "Blaine's Growlithe (Gym Heroes 35)", 
+                image: "https://www.pokepedia.fr/images/3/37/Carte_Gym_Heroes_35.png" },
+
+                { id: "caninos3", nom: "Blaine's Growlithe (Gym Heroes 62)", 
+                image: "https://www.pokepedia.fr/images/5/5e/Carte_Gym_Heroes_62.png" },
+
+                { id: "caninos4", nom: "Caninos (Aquapolis 51)", 
+                image: "https://www.pokepedia.fr/images/8/8e/Carte_Aquapolis_51.png" },
+
+                { id: "caninos5", nom: "Caninos (Aquapolis 80)", 
+                image: "https://www.pokepedia.fr/images/2/2e/Carte_Aquapolis_80.png" },
+
+                { id: "caninos6", nom: "Caninos (Combat Express (2022) 4)", 
+                image: "https://www.pokepedia.fr/images/6/65/Carte_Combat_Express_2022_4.png" },
+
+                { id: "caninos7", nom: "Caninos (Diamant & Perle Merveilles Secrètes 89)", 
+                image: "https://www.pokepedia.fr/images/d/d8/Carte_Diamant_%26_Perle_Merveilles_Secr%C3%A8tes_89.png" },
+
+                { id: "caninos8", nom: "Caninos (Écarlate et Violet 030)", 
+                image: "https://www.pokepedia.fr/images/1/16/Carte_%C3%89carlate_et_Violet_030.png" },
+
+                { id: "caninos9", nom: "Caninos (Écarlate et Violet 031)", 
+                image: "https://www.pokepedia.fr/images/2/23/Carte_%C3%89carlate_et_Violet_031.png" },
+
+                { id: "caninos10", nom: "Caninos (Écarlate et Violet 151 058)", 
+                image: "https://www.pokepedia.fr/images/3/32/Carte_%C3%89carlate_et_Violet_151_058.png" },
+
+                { id: "caninos11", nom: "Caninos (Épée et Bouclier Clash des Rebelles 027)", 
+                image: "https://www.pokepedia.fr/images/7/75/Carte_%C3%89p%C3%A9e_et_Bouclier_Clash_des_Rebelles_027.png" },
+
+                { id: "caninos12", nom: "Caninos (Épée et Bouclier Poing de Fusion 032)", 
+                image: "https://www.pokepedia.fr/images/8/87/Carte_%C3%89p%C3%A9e_et_Bouclier_Poing_de_Fusion_032.png" },
+
+                { id: "caninos13", nom: "Caninos (Épée et Bouclier Tempête Argentée 019)", 
+                image: "https://www.pokepedia.fr/images/9/92/Carte_%C3%89p%C3%A9e_et_Bouclier_Temp%C3%AAte_Argent%C3%A9e_019.png" },
+
+                { id: "caninos14", nom: "Caninos (EX Créateurs de légendes 55)", 
+                image: "https://www.pokepedia.fr/images/c/c3/Carte_EX_Cr%C3%A9ateurs_de_L%C3%A9gendes_55.png" },
+
+                { id: "caninos15", nom: "Caninos (EX Kit Dresseur 2 Négapi 4)", 
+                image: "https://www.pokepedia.fr/images/1/1f/Carte_EX_Kit_Dresseur_2_N%C3%A9gapi_4.png" },
+
+                { id: "caninos16", nom: "Caninos (EX Rouge Feu & Vert Feuille 64)", 
+                image: "https://www.pokepedia.fr/images/6/67/Carte_EX_Rouge_Feu_%26_Vert_Feuilles_64.png" },
+
+                { id: "caninos17", nom: "Caninos (EX Tempête de sable 65)", 
+                image: "https://www.pokepedia.fr/images/a/a5/Carte_EX_Temp%C3%AAte_de_Sable_65.png" },
+
+                { id: "caninos18", nom: "Caninos (HeartGold SoulSilver 65)", 
+                image: "https://www.pokepedia.fr/images/9/9f/Carte_HeartGold_SoulSilver_65.png" },
+
+                { id: "caninos19", nom: "Caninos (Mon premier combat Salamèche)", 
+                image: "https://www.pokepedia.fr/images/e/e5/Carte_Mon_Premier_Combat_Salam%C3%A8che.png" },
+
+                { id: "caninos20", nom: "Caninos (Neo Destiny 68)", 
+                image: "https://www.pokepedia.fr/images/8/8c/Carte_Neo_Destiny_68.png" },
+
+                { id: "caninos21", nom: "Caninos (Noir & Blanc Destinées Futures 10)", 
+                image: "https://www.pokepedia.fr/images/1/15/Carte_Noir_%26_Blanc_Destin%C3%A9es_Futures_10.png" },
+
+                { id: "caninos22", nom: "Caninos (Noir & Blanc Destinées Futures 11)", 
+                image: "https://www.pokepedia.fr/images/6/67/Carte_Noir_%26_Blanc_Destin%C3%A9es_Futures_11.png" },
+
+                { id: "caninos23", nom: "Caninos (Noir & Blanc Trésors Légendaires RC4)", 
+                image: "https://www.pokepedia.fr/images/c/cd/Carte_Noir_%26_Blanc_Tr%C3%A9sors_L%C3%A9gendaires_RC4.png" },
+
+                { id: "caninos24", nom: "Caninos (Platine Rivaux Émergeants 63)", 
+                image: "https://www.pokepedia.fr/images/2/26/Carte_Platine_Rivaux_%C3%89mergeants_63.png" },
+
+                { id: "caninos25", nom: "Caninos (Platine Vainqueurs Suprêmes 108)", 
+                image: "https://www.pokepedia.fr/images/3/36/Carte_Platine_Vainqueurs_Supr%C3%AAmes_108.png" },
+
+                { id: "caninos26", nom: "Caninos (Promo McDonald's 2018 5)", 
+                image: "https://www.pokepedia.fr/images/5/5c/Carte_Promo_McDonald%27s_2018_5.png" },
+
+                { id: "caninos27", nom: "Caninos (Promo SV 024)", 
+                image: "https://www.pokepedia.fr/images/b/b5/Carte_Promo_SV_024.png" },
+
+                { id: "caninos28", nom: "Caninos (Puissance Génétique 039)", 
+                image: "https://www.pokepedia.fr/images/6/61/Carte_Puissance_G%C3%A9n%C3%A9tique_039.png" },
+
+                { id: "caninos29", nom: "Caninos (Set de Base 28)", 
+                image: "https://www.pokepedia.fr/images/9/97/Carte_Set_de_Base_28.png" },
+
+                { id: "caninos30", nom: "Caninos (Soleil et Lune 21)", 
+                image: "https://www.pokepedia.fr/images/8/84/Carte_Soleil_et_Lune_21.png" },
+
+                { id: "caninos31", nom: "Caninos (Soleil et Lune Alliance Infaillible 21)", 
+                image: "https://www.pokepedia.fr/images/9/96/Carte_Soleil_et_Lune_Alliance_Infaillible_21.png" },
+
+                { id: "caninos32", nom: "Caninos (XY Évolutions 17)", 
+                image: "https://www.pokepedia.fr/images/7/79/Carte_XY_Évolutions_17.png" },
+
+                { id: "caninos33", nom: "Caninos (XY Rupture TURBO 10)", 
+                image: "https://www.pokepedia.fr/images/8/8a/Carte_XY_Rupture_TURBO_10.png" },
+
+                { id: "caninos34", nom: "Caninos de Hisui (Écarlate et Violet Mascarade Crépusculaire 099)", 
+                image: "https://www.pokepedia.fr/images/1/1f/Carte_Écarlate_et_Violet_Mascarade_Crépusculaire_099.png" },
+
+                { id: "caninos35", nom: "Caninos de Hisui (Écarlate et Violet Mascarade Crépusculaire 181)", 
+                image: "https://www.pokepedia.fr/images/c/c5/Carte_Écarlate_et_Violet_Mascarade_Crépusculaire_181.png" },
+
+                { id: "caninos36", nom: "Growlithe (Skyridge 62)", 
+                image: "https://www.pokepedia.fr/images/3/3e/Carte_Skyridge_62.png" },
+
+                { id: "caninos37", nom: "ガーディ (Pプロモカード 030)", 
+                image: "https://www.pokepedia.fr/images/8/8f/Carte_P_プロモカード_030.png" },
+
+                { id: "caninos38", nom: "ガーディ (イントロパック 26)", 
+                image: "https://www.pokepedia.fr/images/0/0e/Carte_イントロパック_26.png" },
+
+                { id: "caninos39", nom: "ガーディ (拡張シート)", 
+                image: "https://www.pokepedia.fr/images/d/d1/Carte_拡張シート.png" }
             ]
-        };
+        }
 
         function selectUser() {
             const user = document.getElementById("user-select").value;
@@ -222,6 +554,47 @@
             document.getElementById("filter-container").style.display = "none";
         }
 
+        function getCurrentUser() {
+            return localStorage.getItem("selectedUser");
+        }
+
+        function saveSelection(id) {
+            const checked = document.getElementById(id).checked;
+            localStorage.setItem(id, checked);
+            updateCards();
+        }
+
+        // Créer un élément de visualisation de carte
+        const cardVisualization = document.createElement("div");
+        cardVisualization.id = "card-visualization";
+        cardVisualization.innerHTML = `
+            <img src="" alt="" id="visualization-img">
+        `;
+        document.body.appendChild(cardVisualization);
+
+        // Fonction pour ouvrir la carte en grand
+        function openCard(imageUrl) {
+            const img = document.getElementById("visualization-img");
+            img.src = imageUrl;
+            cardVisualization.style.display = "flex"; // Afficher la carte en grand
+        }
+
+        // Fonction pour fermer la carte en grand
+        function closeCard() {
+            cardVisualization.style.display = "none"; // Masquer la vue agrandie
+        }
+
+        // Lorsque vous cliquez sur l'overlay, fermez la vue
+        cardVisualization.addEventListener("click", function(event) {
+            // Si l'utilisateur clique sur l'image, ne rien faire
+            if (event.target.id === "visualization-img") {
+                return;
+            }
+            // Sinon, fermer la vue
+            closeCard();
+        });
+
+        // Modifier la fonction de mise à jour des cartes pour ajouter un événement de clic
         function updateCards() {
             const pokemon = document.getElementById("pokemon-select").value;
             const filter = document.getElementById("filter-select").value;
@@ -240,7 +613,7 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                        <img src="${carte.image}" alt="${carte.nom}">
+                        <img src="${carte.image}" alt="${carte.nom}" onclick="openCard('${carte.image}')">
                         <p>${carte.nom}</p>
                         <input type="checkbox" id="${cardId}" onclick="saveSelection('${cardId}')" ${owned ? "checked" : ""}>
                         <label for="${cardId}">Possédée</label>
@@ -250,15 +623,6 @@
             }
         }
 
-        function getCurrentUser() {
-            return localStorage.getItem("selectedUser");
-        }
-
-        function saveSelection(id) {
-            const checked = document.getElementById(id).checked;
-            localStorage.setItem(id, checked);
-            updateCards();
-        }
 
         window.onload = function() {
             localStorage.removeItem("selectedUser");
