@@ -12,6 +12,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
+<script>
+let inputSequence = "";
+
+// Écoute les touches clavier
+document.addEventListener("keydown", function(event) {
+    inputSequence += event.key; // Ajoute la touche tapée
+
+    // Garde seulement les 3 derniers caractères
+    if (inputSequence.length > 3) {
+        inputSequence = inputSequence.slice(-3);
+    }
+
+    // Vérifie si la séquence est "666"
+    if (inputSequence === "666") {
+        window.location.href = "index2.html"; // Redirige vers ta page
+    }
+});
+</script>
+
 <body>
 
     <h1>BLINDBOX TRACKER</h1>
