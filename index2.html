@@ -1,185 +1,194 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rejoignez-nous !</title>
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-    <style>
-        /* Styles généraux */
-        body {
-            background: url('pentagram2.png') no-repeat center center fixed;
-            background-size: cover;
-            color: red;
-            text-align: center;
-            font-family: 'UnifrakturMaguntia', cursive;
-            margin: 0;
-            overflow: hidden;
-            cursor: url('curseur-pentacle.png'), auto;
-            animation: tremblement 3s infinite alternate ease-in-out;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rejoignez-nous !</title>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+    body {
+        background: url('pentagram2.png') no-repeat center center fixed;
+        background-size: cover;
+        color: red;
+        text-align: center;
+        font-family: 'UnifrakturMaguntia', cursive;
+        margin: 0;
+        overflow-x: hidden;
+        cursor: url('curseur-pentacle.png'), auto;
+        animation: tremblement 3s infinite alternate ease-in-out;
+    }
 
-        /* Effet de tremblement */
-        @keyframes tremblement {
-            0% { transform: translate(0px, 0px); }
-            25% { transform: translate(1px, -1px); }
-            50% { transform: translate(-1px, 1px); }
-            75% { transform: translate(1px, 1px); }
-            100% { transform: translate(-1px, -1px); }
-        }
+    @keyframes tremblement {
+        0% { transform: translate(0px, 0px); }
+        25% { transform: translate(1px, -1px); }
+        50% { transform: translate(-1px, 1px); }
+        75% { transform: translate(1px, 1px); }
+        100% { transform: translate(-1px, -1px); }
+    }
 
-        /* Effet glitch sur le titre */
-        h1 {
-            font-size: 60px;
-            text-shadow: 0 0 20px red;
-            margin-top: 20px;
-            animation: glitch 1s infinite alternate;
-        }
+    h1 {
+        font-size: 60px;
+        text-shadow: 0 0 20px red;
+        margin-top: 20px;
+        animation: glitch 1s infinite alternate;
+    }
 
-        @keyframes glitch {
-            0% { text-shadow: 3px 3px 10px red; }
-            100% { text-shadow: -3px -3px 10px darkred; }
-        }
+    @keyframes glitch {
+        0% { text-shadow: 3px 3px 10px red; }
+        100% { text-shadow: -3px -3px 10px darkred; }
+    }
 
-        /* Texte immersif */
-        .message {
-            font-size: 30px;
-            font-weight: bold;
-            text-shadow: 0 0 10px darkred;
-            animation: clignote 1s infinite alternate;
-        }
+    .message {
+        font-size: 30px;
+        font-weight: bold;
+        text-shadow: 0 0 10px darkred;
+        animation: clignote 1s infinite alternate;
+        padding: 0 10px;
+    }
 
-        @keyframes clignote {
-            0% { opacity: 1; }
-            100% { opacity: 0.4; }
-        }
+    @keyframes clignote {
+        0% { opacity: 1; }
+        100% { opacity: 0.4; }
+    }
 
-        /* Compteur */
-        .countdown {
-            font-size: 35px;
-            margin-top: 350px;
-            font-weight: bold;
-            text-shadow: 0 0 10px black;
-            color: rgb(255, 0, 0);
-            animation: clignote 1s infinite alternate;
-        }
+    .countdown {
+        font-size: 35px;
+        margin-top: 350px;
+        font-weight: bold;
+        text-shadow: 0 0 10px black;
+        color: rgb(255, 0, 0);
+        animation: clignote 1s infinite alternate;
+        padding: 0 10px;
+    }
 
-        .bizarre-text {
-            font-size: 20px;
-            color: red;
-            position: absolute;
-            top: 250px;
-            left: 70%;
-            font-weight: bold;
-            text-shadow: 0 0 10px red;
-            transform: rotate(-45deg);  /* Texte penché de 45 degrés */
-        }
+    .bizarre-text {
+        font-size: 20px;
+        color: red;
+        position: absolute;
+        top: 250px;
+        left: 70%;
+        font-weight: bold;
+        text-shadow: 0 0 10px red;
+        transform: rotate(-45deg);
+    }
 
-        /* Bouton PayPal démoniaque */
-        .paypal-button {
-            display: inline-block;
-            background-color: darkred;
-            color: white;
-            padding: 15px 30px;
-            font-size: 25px;
-            text-decoration: none;
-            border-radius: 5px;
-            box-shadow: 0 0 15px red;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            margin-top: 20px;
-            animation: pulse 1.5s infinite alternate;
-        }
+    .paypal-button {
+        display: inline-block;
+        background-color: darkred;
+        color: white;
+        padding: 15px 30px;
+        font-size: 25px;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 0 15px red;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        margin-top: 20px;
+        animation: pulse 1.5s infinite alternate;
+    }
 
-        .paypal-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px white;
-        }
+    .paypal-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 25px white;
+    }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 15px red; }
-            100% { box-shadow: 0 0 30px darkred; }
-        }
+    @keyframes pulse {
+        0% { box-shadow: 0 0 15px red; }
+        100% { box-shadow: 0 0 30px darkred; }
+    }
 
-        /* Crânes flottants */
-        .skull {
-            position: absolute;
-            width: 80px;
-            opacity: 0.8;
-            animation: float 5s infinite alternate ease-in-out;
-        }
+    .skull {
+        position: absolute;
+        width: 80px;
+        opacity: 0.8;
+        animation: float 5s infinite alternate ease-in-out;
+    }
 
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(30px) rotate(10deg); }
-        }
+    @keyframes float {
+        0% { transform: translateY(0px) rotate(0deg); }
+        100% { transform: translateY(30px) rotate(10deg); }
+    }
 
-        .blood-image {
-            position: absolute;
-            top: 50%; /* Centré verticalement */
-            left: 7%; /* Décalé à droite */
-            transform: translateY(-50%); /* Ajuste pour le centrage exact */
-            width: 500; /* Ajuste la taille de l'image selon tes besoins */
-            opacity: 0.8; /* Légère transparence */
-        }
+    .blood-image {
+        position: absolute;
+        top: 50%;
+        left: 7%;
+        transform: translateY(-50%);
+        width: 400px;
+        max-width: 90%;
+        opacity: 0.8;
+    }
 
-        /* Musique cachée */
-        #audio {
-            display: none;
-        }
-    </style>
+    #audio {
+        display: none;
+    }
+
+    /* 📱 Version mobile */
+    @media screen and (max-width: 768px) {
+        h1 { font-size: 35px; }
+        .message { font-size: 18px; }
+        .countdown { font-size: 20px; margin-top: 150px; }
+        .paypal-button { font-size: 18px; padding: 10px 20px; }
+        .skull { width: 50px; }
+        .blood-image { width: 250px; left: 2%; }
+        .bizarre-text { font-size: 14px; top: 150px; left: 60%; }
+    }
+
+    /* 📱 Très petits écrans */
+    @media screen and (max-width: 480px) {
+        h1 { font-size: 28px; }
+        .message { font-size: 16px; }
+        .countdown { font-size: 18px; margin-top: 100px; }
+        .paypal-button { font-size: 16px; padding: 8px 15px; }
+        .skull { width: 40px; }
+        .blood-image { width: 200px; }
+        .bizarre-text { font-size: 12px; top: 120px; left: 55%; }
+    }
+</style>
 </head>
 <body>
 
-    <h1>Rejoignez-nous !</h1>
+<h1>Rejoignez-nous !</h1>
+<p class="message">Le grand jour approche... Offrez votre âme à la grande prêtresse.</p>
+<a class="paypal-button" href="index3.html">Offrir un sacrifice</a>
+<p class="countdown" id="countdown"></p>
 
-    <p class="message">Le grand jour approche... Offrez votre âme à la grande prêtresse.</p>
+<img src="skull.gif" class="skull" style="top: 10%; left: 5%;">
+<img src="skull.gif" class="skull" style="top: 60%; left: 85%;">
+<img src="skull.gif" class="skull" style="top: 90%; left: 20%;">
+<img src="skull.gif" class="skull" style="top: 30%; left: 60%;">
+<img src="sang.png" class="blood-image">
+<p class="bizarre-text">𓂀 𐍈 𐌿𐍂 𓄿𓈖𐌏𐌘 𐑂𐘉𐍂 ...</p>
 
-    <a class="paypal-button" href="index3.html">Offrir un sacrifice</a>
+<audio id="audio" autoplay loop>
+    <source src="music.mp3" type="audio/mp3">
+</audio>
 
-    <!-- Compteur du Rituel -->
-    <p class="countdown" id="countdown"></p>
-
-    <!-- Crânes flottants -->
-    <img src="skull.gif" class="skull" style="top: 10%; left: 5%;">
-    <img src="skull.gif" class="skull" style="top: 60%; left: 85%;">
-    <img src="skull.gif" class="skull" style="top: 90%; left: 20%;">
-    <img src="skull.gif" class="skull" style="top: 30%; left: 60%;">
-
-    <img src="sang.png" class="blood-image">
-
-    <p class="bizarre-text">𓂀 𐍈 𐌿𐍂 𓄿𓈖𐌏𐌘 𐑂𐘉𐍂 𑁍𑂘 𐌽𐍇𑁍 𐎤𐎰𐎩𐎩 𐍈𐎻𐎿𐍁𐏂𐍇 𓋿𓂋𓋺𓏏𐌅 𓇋𓏢𓈖𓏧 𐑇𐍀𐌃𓄜𐌍𐎽𐏀𐐿𐑈</p>
-
-    <!-- Musique occulte -->
-    <audio id="audio" autoplay loop>
-        <source src="music.mp3" type="audio/mp3">
-    </audio>
-
-    <script>
-        document.addEventListener("click", function() {
+<script>
+    document.addEventListener("click", function() {
         document.getElementById("audio").play();
-        }, { once: true }); // Se déclenche une seule fois
+    }, { once: true });
 
-        // Compteur du Grand Rituel (exemple : 31 octobre 2025)
-        function updateCountdown() {
-            const eventDate = new Date("October 31, 2025 00:00:00").getTime();
-            const now = new Date().getTime();
-            const timeLeft = eventDate - now;
+    function updateCountdown() {
+        const eventDate = new Date("October 31, 2025 00:00:00").getTime();
+        const now = new Date().getTime();
+        const timeLeft = eventDate - now;
 
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML = `Temps avant le Grand Rituel : ${days}j ${hours}h ${minutes}m ${seconds}s`;
+        document.getElementById("countdown").innerHTML =
+            `Temps avant le Grand Rituel : ${days}j ${hours}h ${minutes}m ${seconds}s`;
 
-            if (timeLeft < 0) {
-                document.getElementById("countdown").innerHTML = "Le rituel a commencé !";
-            }
+        if (timeLeft < 0) {
+            document.getElementById("countdown").innerHTML = "Le rituel a commencé !";
         }
+    }
 
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-    </script>
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
 
 </body>
 </html>
