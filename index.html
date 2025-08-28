@@ -186,7 +186,7 @@ document.addEventListener("keydown", function(event) {
                 userNames[user].forEach(collection => {
                     const option = document.createElement("option");
                     option.value = collection;
-                    option.textContent = collection.charAt(0).toUpperCase() + collection.slice(1);
+                    option.textContent = collection;
                     selectCollection.appendChild(option);
                 });
 
@@ -207,9 +207,9 @@ document.addEventListener("keydown", function(event) {
             return localStorage.getItem("selectedUser");
         }
 
-        function saveSelection(id) {
-            const checkbox = document.getElementById(id);
-            const countInput = document.getElementById(`${id}-count`);
+        function saveSelection(cardId) {
+            const checkbox = document.getElementById(cardId);
+            const countInput = document.getElementById(`${cardId}-count`);
 
             if (checkbox.checked) {
                 countInput.value = 1;  
@@ -217,8 +217,8 @@ document.addEventListener("keydown", function(event) {
                 countInput.value = 0;  
             }
 
-            localStorage.setItem(id, checkbox.checked);
-            localStorage.setItem(`${id}-count`, countInput.value);
+            localStorage.setItem(cardId, checkbox.checked);
+            localStorage.setItem(`${cardId}-count`, countInput.value);
             updateCards();
         }
 
@@ -260,9 +260,9 @@ document.addEventListener("keydown", function(event) {
                 container.appendChild(boxCard);
 
                 collectionData[collection].forEach(figurine => {
-                    const cardId = `${getCurrentUser()}-${figurine.id}`;
+                    const cardId = `${getCurrentUser()}-${collection}-${figurine.id}`;
                     const owned = localStorage.getItem(cardId) === "true";
-                    const favoriteId = `${getCurrentUser()}-${figurine.id}-fav`;
+                    const favoriteId = `${getCurrentUser()}-${collection}-${figurine.id}-fav`;
                     const favorite = localStorage.getItem(favoriteId) === "true";
 
                     if (filter === "owned" && !owned) return;
@@ -317,7 +317,7 @@ document.addEventListener("keydown", function(event) {
             const price = collectionPrices[collection] || 0;
 
             collectionData[collection].forEach(figurine => {
-                const cardId = `${getCurrentUser()}-${figurine.id}`;
+                const cardId = `${getCurrentUser()}-${collection}-${figurine.id}`;
                 const owned = localStorage.getItem(cardId) === "true";
                 const count = parseInt(localStorage.getItem(cardId + '-count')) || 0;
 
@@ -335,7 +335,6 @@ document.addEventListener("keydown", function(event) {
             document.getElementById("total-amount").textContent = `${globalAmount} €`;
             document.getElementById("total-container").style.display = "block";
         }
-
 
     </script>
 
