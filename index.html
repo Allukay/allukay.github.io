@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Don't call Satan </title>
+    <title>BLINDBOX TRACKER</title>
 
     <!-- Police -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -77,23 +77,29 @@ document.addEventListener("keydown", function(event) {
 
     <div class="footer">©N.V</div>
 
+
     <script>
         const userNames = {
-            "nathan": ["The Power Puff X Cry Baby"],
+            "nathan": ["The Power Puff X Cry Baby", "Beetlejuice"],
             "emeline": ["Nommi - Loveliness never ends"],
-            "ewen": ["Lilios City Wild Boy"]
+            "ewen": ["Lilios City Wild Boy"],
+            "celia": ["Genshin Impact - Dress-Up Dreams"]
         };
 
         const collectionPrices = {
             "The Power Puff X Cry Baby": 15,
             'Nommi - Loveliness never ends': 25,
-            "Lilios City Wild Boy": 15
+            "Lilios City Wild Boy": 15,
+            "Beetlejuice": 17,
+            "Genshin Impact - Dress-Up Dreams": 20
         };
 
         const collectionBoxes = {
             "The Power Puff X Cry Baby": "Images/pop-mart-crybaby-powerpuff-girls_box.jpg",
             "Nommi - Loveliness never ends": "Images/nommibox.webp",
-            "Lilios City Wild Boy": "Images/liliosbox.webp"
+            "Lilios City Wild Boy": "Images/liliosbox.webp",
+            "Beetlejuice": "Images/beetlejuice_box.jpg",
+            "Genshin Impact - Dress-Up Dreams": "Images/genshin_box.jpg"
         };
 
         const collectionData = {
@@ -131,6 +137,31 @@ document.addEventListener("keydown", function(event) {
                 { id: "Fig7", nom: "Not a King", image: "Images/lilios8.jpg" },
                 { id: "Fig8", nom: "Spring Elf", image: "Images/lilios4.jpg" },
                 { id: "Fig9", nom: "Hug me, Wildness", image: "Images/liliossecret.jpg" },
+            ],
+            "Beetlejuice": [
+                { id: "Fig1", nom: "Lydia", image: "Images/beetlejuice_1.jpg" },
+                { id: "Fig2", nom: "Beetlejuice", image: "Images/beetlejuice_2.jpg" },
+                { id: "Fig3", nom: "Beetlejuice Park", image: "Images/beetlejuice_3.jpg" },
+                { id: "Fig4", nom: "Sandworm", image: "Images/beetlejuice_4.jpg" },
+                { id: "Fig5", nom: "Adam", image: "Images/beetlejuice_5.jpg" },
+                { id: "Fig6", nom: "Barbara", image: "Images/beetlejuice_6.jpg" },
+                { id: "Fig7", nom: "secret A", image: "Images/beetlejuice_secreta.jpg" },
+                { id: "Fig8", nom: "secret B", image: "Images/beetlejuice_secretb.jpg" },
+            ],
+            "Genshin Impact - Dress-Up Dreams": [
+                { id: "Fig1", nom: "Barbara", image: "Images/genshin_1.jpg" },
+                { id: "Fig2", nom: "Xiangling", image: "Images/genshin_2.jpg" },
+                { id: "Fig3", nom: "Xingqiu", image: "Images/genshin_3.jpg" },
+                { id: "Fig4", nom: "Jean", image: "Images/genshin_4.jpg" },
+                { id: "Fig5", nom: "Venti", image: "Images/genshin_5.jpg" },
+                { id: "Fig6", nom: "Tartaglia", image: "Images/genshin_6.jpg" },
+                { id: "Fig7", nom: "Albedo", image: "Images/genshin_7.jpg" },
+                { id: "Fig8", nom: "Ganyu", image: "Images/genshin_8.jpg" },
+                { id: "Fig9", nom: "Hu Tao", image: "Images/genshin_9.jpg" },
+                { id: "Fig10", nom: "Yoimiya", image: "Images/genshin_10.jpg" },
+                { id: "Fig11", nom: "Thoma", image: "Images/genshin_11.jpg" },
+                { id: "Fig12", nom: "Gorou", image: "Images/genshin_12.jpg" },
+                { id: "Fig13", nom: "Secret", image: "Images/genshin_secret.jpg" }
             ]
         };
 
@@ -304,6 +335,8 @@ document.addEventListener("keydown", function(event) {
             document.getElementById("total-amount").textContent = `${globalAmount} €`;
             document.getElementById("total-container").style.display = "block";
         }
+
+
     </script>
 
 </body>
