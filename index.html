@@ -81,7 +81,7 @@ document.addEventListener("keydown", function(event) {
     <script>
         const userNames = {
             "nathan": ["The Power Puff X Cry Baby", "Beetlejuice"],
-            "emeline": ["Nommi - Loveliness never ends"],
+            "emeline": ["Nommi - Loveliness never ends","Nommi - Fantasy World", "Skullpanda Lazy Panda", "Skullpanda The Paradox", "Skullpanda Winter Symphony"],
             "ewen": ["Lilios City Wild Boy"],
             "celia": ["Genshin Impact - Dress-Up Dreams"]
         };
@@ -91,7 +91,10 @@ document.addEventListener("keydown", function(event) {
             'Nommi - Loveliness never ends': 25,
             "Lilios City Wild Boy": 15,
             "Beetlejuice": 17,
-            "Genshin Impact - Dress-Up Dreams": 20
+            "Genshin Impact - Dress-Up Dreams": 20,
+            "Skullpanda Lazy Panda": 36,
+            "Skullpanda The Paradox": 15,
+            "Skullpanda Winter Symphony": 24,
         };
 
         const collectionBoxes = {
@@ -99,7 +102,11 @@ document.addEventListener("keydown", function(event) {
             "Nommi - Loveliness never ends": "Images/nommibox.webp",
             "Lilios City Wild Boy": "Images/liliosbox.webp",
             "Beetlejuice": "Images/beetlejuice_box.jpg",
-            "Genshin Impact - Dress-Up Dreams": "Images/genshin_box.jpg"
+            "Genshin Impact - Dress-Up Dreams": "Images/genshin_box.jpg",
+            "Skullpanda Lazy Panda": "Images/skullpanda_panda_box.jpg",
+            "Skullpanda The Paradox": "Images/skullpanda_paradox_pres.jpg",
+            "Skullpanda Winter Symphony": "Images/skullpanda_winter_pres.jpg",
+            "Nommi - Fantasy World": "Images/nommi_fantasy_pres.jpg",
         };
 
         const collectionData = {
@@ -162,7 +169,43 @@ document.addEventListener("keydown", function(event) {
                 { id: "Fig11", nom: "Thoma", image: "Images/genshin_11.jpg" },
                 { id: "Fig12", nom: "Gorou", image: "Images/genshin_12.jpg" },
                 { id: "Fig13", nom: "Secret", image: "Images/genshin_secret.jpg" }
-            ]
+            ],
+            "Skullpanda Lazy Panda": [
+                { id: "Fig1", nom: "Lazy Panda", image: "Images/skullpanda_panda.jpg" },
+            ],
+            "Skullpanda The Paradox": [
+                { id: "Fig1", nom: "Out of the Mud", image: "Images/skullpanda_paradox_1.webp" },
+                { id: "Fig2", nom: "The Jewel Cage", image: "Images/skullpanda_paradox_2.webp" },
+                { id: "Fig3", nom: "Spin a Cocoon", image: "Images/skullpanda_paradox_3.webp" },
+                { id: "Fig4", nom: "Being a Butterfly", image: "Images/skullpanda_paradox_4.webp" },
+                { id: "Fig5", nom: "Diving In", image: "Images/skullpanda_paradox_5.webp" },
+                { id: "Fig6", nom: "Flying High", image: "Images/skullpanda_paradox_6.webp" },
+                { id: "Fig7", nom: "The Hold", image: "Images/skullpanda_paradox_7.webp" },
+                { id: "Fig8", nom: "The Bond", image: "Images/skullpanda_paradox_8.webp" },
+                { id: "Fig9", nom: "The External Echoes", image: "Images/skullpanda_paradox_9.webp" },
+                { id: "Fig10", nom: "The Infernal Dialogue", image: "Images/skullpanda_paradox_10.webp" },
+                { id: "Fig11", nom: "The Asymmetrical Balance", image: "Images/skullpanda_paradox_11.webp" },
+                { id: "Fig12", nom: "The Cyclical Path", image: "Images/skullpanda_paradox_12.webp" },
+                { id: "Fig13", nom: "The Key", image: "Images/skullpanda_paradox_secret.webp" }
+            ],
+            "Skullpanda Winter Symphony": [
+                { id: "Fig1", nom: "Rock On", image: "Images/skullpanda_winter1.jpg" },
+                { id: "Fig2", nom: "Rhapsody", image: "Images/skullpanda_winter2.jpg" },
+                { id: "Fig3", nom: "Partita", image: "Images/skullpanda_winter3.jpg" },
+                { id: "Fig4", nom: "Wanderer's Tune", image: "Images/skullpanda_winter4.jpg" },
+                { id: "Fig5", nom: "Ode to Cocoa", image: "Images/skullpanda_winter5.jpg" },
+                { id: "Fig6", nom: "Song of Snow", image: "Images/skullpanda_winter6.jpg" },
+                { id: "Fig7", nom: "Symphony of Whishes", image: "Images/skullpanda_winter_secret.jpg" },
+            ],
+            "Nommi - Fantasy World": [
+                { id: "Fig1", nom: "Aurora", image: "Images/nommi_fantasy_1.jpg" },
+                { id: "Fig2", nom: "Eclipse", image: "Images/nommi_fantasy_2.jpg" },
+                { id: "Fig3", nom: "Morpheus", image: "Images/nommi_fantasy_3.jpg" },
+                { id: "Fig4", nom: "Reverie", image: "Images/nommi_fantasy_4.jpg" },
+                { id: "Fig5", nom: "Solace", image: "Images/nommi_fantasy_5.jpg" },
+                { id: "Fig6", nom: "Nepenthe", image: "Images/nommi_fantasy_6.jpg" },
+                { id: "Fig7", nom: "Starflare", image: "Images/nommi_fantasy_secret.jpg" },
+            ],
         };
 
         function selectUser() {
