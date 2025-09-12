@@ -425,24 +425,7 @@ document.addEventListener("keydown", function(event) {
             }, 8200);
         }
 
-        const customMenu = document.getElementById("customContextMenu");
-
-        document.addEventListener("contextmenu", function(e) {
-            e.preventDefault(); // empêche le menu contextuel par défaut
-            customMenu.style.left = e.pageX + "px";
-            customMenu.style.top = e.pageY + "px";
-            customMenu.style.display = "block";
-        });
-
-        document.addEventListener("click", function(e) {
-            if (e.target !== customMenu) customMenu.style.display = "none";
-        });
-
-        // Cliquer sur "Sexy Mode" déclenche l’easter egg
-        customMenu.addEventListener("click", function() {
-            triggerEasterEgg(); 
-            customMenu.style.display = "none";
-        });
+        
 
     </script>
 
