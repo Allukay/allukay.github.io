@@ -395,8 +395,8 @@ document.addEventListener("keydown", function(event) {
 
         document.addEventListener("keydown", (e) => {
             typedKeys += e.key.toLowerCase();
-            if (typedKeys.length > 3) typedKeys = typedKeys.slice(-3);
-            if (typedKeys === "sex") {
+            if (typedKeys.length > 4) typedKeys = typedKeys.slice(-4);
+            if (typedKeys === "sexy") {
                 triggerEasterEgg();
                 typedKeys = "";
             }
