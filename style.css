@@ -224,3 +224,19 @@ label {
     .progress-container { max-width: 200px; height: 14px; }
     .total-container { font-size: 1.1em; }
 }
+
+#easterEggOverlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+        }
+
+#easterEggOverlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* étire l'image sur tout l'écran */
+}
