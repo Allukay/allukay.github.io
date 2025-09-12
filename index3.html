@@ -122,7 +122,6 @@
     0%{ transform: translate(0,0) scale(1); opacity:1;}
     100%{ transform: translate(var(--x), var(--y)) scale(0); opacity:0;}
   }
-  /* Styles pour le timer et texte après soumission du formulaire */
   #timer {
     font-size: 1.2rem;
     margin-bottom: 2rem;
@@ -144,7 +143,6 @@
     color:white;
     cursor:pointer;
   }
-  /* animation cœur avec nom */
   .heartNameSVG {
     transform: scale(0);
     opacity: 0;
@@ -238,13 +236,13 @@ function explodeHeart(){
           <form id="dateForm">
             <h3>Planifions un Date ensemble ❤️</h3>
             <label>Nom:</label>
-            <input type="text" placeholder="Celle qui apparaît dans mes rêves..." required />
+            <input type="text" name="nom" placeholder="Celle qui apparaît dans mes rêves..." required />
             <label>Date:</label>
-            <input type="date" required />
+            <input type="date" name="date" required />
             <label>Heure:</label>
-            <input type="time" required />
+            <input type="time" name="heure" required />
             <label>Message:</label>
-            <textarea placeholder="Un petit mot..." rows="3"></textarea>
+            <textarea name="message" placeholder="Un petit mot..." rows="3"></textarea>
             <button type="submit">Envoyer</button>
           </form>
         `;
@@ -254,59 +252,71 @@ function explodeHeart(){
         form.addEventListener('submit', function(e){
             e.preventDefault();
 
-            const name = form.querySelector('input[type="text"]').value;
-            const dateStr = form.querySelector('input[type="date"]').value;
-            const timeStr = form.querySelector('input[type="time"]').value;
-            const targetDate = new Date(`${dateStr}T${timeStr}`);
+            const data = new FormData(form);
 
-            const firstLetter = name.charAt(0).toUpperCase(); // Première lettre du nom
-            wrap.innerHTML = `
-            <div id="resultBox">
-                <div id="timer"></div>
-                <p>J’attendrai l’éternité s’il le faut pour contempler, ne serait-ce qu’un instant de plus, l’éclat de ton doux visage.</p>
-                <div id="heartNameContainer" style="margin-top:2rem; display:flex; justify-content:center; align-items:center; flex-direction:column;">
-                    <svg viewBox="0 0 100 100" class="heartNameSVG" style="width:150px; height:150px;">
-                        <path d="M50,18 C41,-2,10,4,10,30 C10,55,35,67,50,85 C65,67,90,55,90,30 C90,4,59,-2,50,18 Z" 
-                            fill="#ff3b61" stroke="#ff2d55" stroke-width="4"/>
-                        <text x="50" y="48" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold" font-family="sans-serif">
-                            ${firstLetter} + N
-                        </text>
-                    </svg>
-                </div>
-                <button id="goTracker">Ce n'est qu'un au-revoir</button>
-            </div>
-            `;
+            // Envoi vers Formspree
+            fetch("https://formspree.io/f/mldwvjqy", {
+                method: "POST",
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    const name = form.querySelector('input[name="nom"]').value;
+                    const dateStr = form.querySelector('input[name="date"]').value;
+                    const timeStr = form.querySelector('input[name="heure"]').value;
+                    const targetDate = new Date(`${dateStr}T${timeStr}`);
 
+                    const firstLetter = name.charAt(0).toUpperCase();
+                    wrap.innerHTML = `
+                    <div id="resultBox">
+                        <div id="timer"></div>
+                        <p>J’attendrai l’éternité s’il le faut pour contempler, ne serait-ce qu’un instant de plus, l’éclat de ton doux visage.</p>
+                        <div id="heartNameContainer" style="margin-top:2rem; display:flex; justify-content:center; align-items:center; flex-direction:column;">
+                            <svg viewBox="0 0 100 100" class="heartNameSVG" style="width:150px; height:150px;">
+                                <path d="M50,18 C41,-2,10,4,10,30 C10,55,35,67,50,85 C65,67,90,55,90,30 C90,4,59,-2,50,18 Z" 
+                                    fill="#ff3b61" stroke="#ff2d55" stroke-width="4"/>
+                                <text x="50" y="48" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold" font-family="sans-serif">
+                                    ${firstLetter} + N
+                                </text>
+                            </svg>
+                        </div>
+                        <button id="goTracker">Ce n'est qu'un au-revoir</button>
+                    </div>
+                    `;
 
-            setTimeout(() => {
-                document.querySelector('.heartNameSVG').classList.add('show');
-            }, 50);
+                    setTimeout(() => {
+                        document.querySelector('.heartNameSVG').classList.add('show');
+                    }, 50);
 
-            function updateTimer() {
-                const now = new Date();
-                const diff = targetDate - now;
+                    function updateTimer() {
+                        const now = new Date();
+                        const diff = targetDate - now;
 
-                if (diff <= 0) {
-                    document.getElementById('timer').textContent = "C'est le moment de notre rendez-vous ❤️";
-                    clearInterval(timerInterval);
-                    return;
+                        if (diff <= 0) {
+                            document.getElementById('timer').textContent = "C'est le moment de notre rendez-vous ❤️";
+                            clearInterval(timerInterval);
+                            return;
+                        }
+
+                        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                        const seconds = Math.floor((diff / 1000) % 60);
+
+                        document.getElementById('timer').textContent =
+                            `${days}j ${hours}h ${minutes}m ${seconds}s avant notre rendez-vous 💕`;
+                    }
+
+                    const timerInterval = setInterval(updateTimer, 1000);
+                    updateTimer();
+
+                    document.getElementById('goTracker').addEventListener('click', () => {
+                        window.location.href = "index.html";
+                    });
+                } else {
+                    alert("Erreur lors de l’envoi 😢");
                 }
-
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const minutes = Math.floor((diff / (1000 * 60)) % 60);
-                const seconds = Math.floor((diff / 1000) % 60);
-
-                document.getElementById('timer').textContent =
-                    `${days}j ${hours}h ${minutes}m ${seconds}s avant notre rendez-vous 💕`;
-            }
-
-            const timerInterval = setInterval(updateTimer, 1000);
-            updateTimer();
-
-            document.getElementById('goTracker').addEventListener('click', () => {
-                window.location.href = "index.html";
-            });
+            }).catch(error => alert("Impossible d’envoyer 😢"));
         });
     }, 800);
 
