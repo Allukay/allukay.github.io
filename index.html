@@ -78,12 +78,6 @@ document.addEventListener("keydown", function(event) {
     <div class="footer">©N.V</div>
 
 
-    <div id="easterEggOverlay">
-        <img src="celia.jpg" alt="Easter Egg">
-    </div>
-    <audio id="easterEggMusic" src="SexyBack.mp3"></audio>
-
-
     <script>
         const userNames = {
             "nathan": ["The Power Puff X Cry Baby", "Beetlejuice"],
@@ -383,43 +377,6 @@ document.addEventListener("keydown", function(event) {
             document.getElementById("progress-container").style.display = "block";
             document.getElementById("total-amount").textContent = `${globalAmount} €`;
             document.getElementById("total-container").style.display = "block";
-        }
-
-
-
-        let typedKeys = "";
-        const easterEggOverlay = document.getElementById("easterEggOverlay");
-        const easterEggMusic = document.getElementById("easterEggMusic");
-        let mainMusic = null; // si tu ajoutes de la musique principale, tu peux la stocker ici
-        let mainWasPlaying = false;
-
-        document.addEventListener("keydown", (e) => {
-            typedKeys += e.key.toLowerCase();
-            if (typedKeys.length > 3) typedKeys = typedKeys.slice(-3);
-            if (typedKeys === "sex") {
-                triggerEasterEgg();
-                typedKeys = "";
-            }
-        });
-
-        function triggerEasterEgg() {
-            // Vérifier si la musique principale existe et si elle est en cours
-            if (mainMusic) {
-                mainWasPlaying = !mainMusic.paused && !mainMusic.ended;
-                if (mainWasPlaying) { mainMusic.pause(); mainMusic.currentTime = 0; }
-            }
-
-            easterEggOverlay.style.display = "flex";
-            easterEggMusic.currentTime = 0;
-            easterEggMusic.play().catch(()=>{});
-
-            setTimeout(() => {
-                easterEggOverlay.style.display = "none";
-                easterEggMusic.pause();
-                easterEggMusic.currentTime = 0;
-
-                if (mainMusic && mainWasPlaying) mainMusic.play().catch(()=>{});
-            }, 8200);
         }
 
     </script>
