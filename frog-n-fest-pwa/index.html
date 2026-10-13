@@ -48,7 +48,7 @@ html,body{overscroll-behavior:none;-webkit-touch-callout:none;-webkit-tap-highli
 </style></head><body>
 <canvas id="c"></canvas>
 <div id="hud" hidden><span id="hl"></span><span id="hc"></span><span id="hb"></span><span id="ht"></span><b id="hn"></b><button class="b k d" id="hm">☰</button></div>
-<div id="hint"></div><div id="rot" hidden><span>📱</span>Tourne ton téléphone en mode paysage pour jouer</div>
+<div id="hint"></div><div id="rot" hidden><span>📱</span>Tourne ton téléphone en mode paysage</div>
 <section class="s" id="title"><div id="logo"></div><h1>Frog'n Fest</h1><p id="tc" style="font-size:22px;margin:0;font-weight:700"></p>
 <div id="tb"><button class="b" data-go="lv">Jouer</button><button class="b p" data-go="shop">Grenouilles</button><button class="b d" data-go="enc">Encyclopédie</button><button class="b y" data-go="opt">Options</button><button class="b r" id="quit">Quitter</button></div><footer id="cp">© Roxas Albarn</footer></section>
 <section class="s" id="lv"><h2>Choisis ton niveau</h2><div id="wl" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px"></div><button class="b r" data-go="title">Retour</button></section>
@@ -125,7 +125,7 @@ const SP=BUG.map(o=>[bug(o,0),bug(o,1)]);OLC=OL;
 const W=[
 {n:'Marécage',sk:['#10261f','#3d1f66'],pl:'#4a3a6e',dk:'#2f2450',tp:'#5fd36e',lt:'#a2f58a',e:[0,1,2]},
 {n:'Prairie fleurie',sk:['#5cb8ff','#d9f7a8'],pl:'#a8693a',dk:'#7a4624',tp:'#4fd13c',lt:'#9af26a',e:[5,3,4]},
-{n:'Désert doré',sk:['#7a3a9a','#ffb04d'],pl:'#d98a4a',dk:'#a65a2a',tp:'#ffd97a',lt:'#fff0b3',e:[6,9,8]}];
+{n:'Désert aride',sk:['#7a3a9a','#ffb04d'],pl:'#d98a4a',dk:'#a65a2a',tp:'#ffd97a',lt:'#fff0b3',e:[6,9,8]}];
 const hh=n=>{n=Math.sin(n*127.1)*43758.5;return n-Math.floor(n)};
 // ---- état
 const P_=new Set();let got0=0,tm=0,lastT=0,lastRec=0,started=0,tot=0,mode='',idx=0,wd,L=1000,H,sol,en,pr,co,pt,F,T,held=0,cx=0,cy=0,sc=1,vw=800,vh=600,sh=0,fl=0,hs=0,got=0;
@@ -199,7 +199,7 @@ for(const p of pt){if(p.ring)p.r+=4;else{p.x+=p.vx;p.y+=p.vy;p.vx*=.96;p.vy*=.96
 if(!en.length)finish(1)}
 function finish(w){mode='end';held=0;const tt=tm/60;lastT=tt;lastRec=0;
 if(w){S.p=Math.max(S.p,Math.min(idx+1,14));const o=S.bt[idx];if(!o){lastRec=2;S.bt[idx]=tt}else if(tt<o){lastRec=1;S.bt[idx]=tt}sv();arp([523,659,784,1047,1319],'triangle',90)}else arp([392,330,262,196],'sawtooth',120);
-$('et').textContent=w?'Miam, bravo ! 🐸':'Plouf ! Plus de vies';
+$('et').textContent=w?'Miam, Crôa ! 🐸':'Crôa ! Indigestion';
 $('etm').innerHTML=w?'⏱ Temps : <b>'+fmt(tt)+'</b><br>🏆 Record : <b>'+fmt(S.bt[idx])+'</b>'+(lastRec==1?'<br>✨ Nouveau record !':lastRec==2?'<br>✨ Premier temps enregistré !':''):'';
 const b=$('e1');b.hidden=0;$('e2').hidden=!(w&&idx<14);$('e2').onclick=()=>build(idx);
 if(w&&idx<14){b.textContent='Niveau suivant';b.onclick=()=>build(idx+1)}else if(!w){b.textContent='Réessayer';b.onclick=()=>build(idx)}else b.hidden=1;
@@ -296,19 +296,19 @@ let eTab=0;
 const EF=[["Rainette verte","Hyla arborea","Ses doigts se terminent par des disques adhésifs qui lui permettent de grimper sur des surfaces lisses, même verticales. Elle peut aussi passer du vert au gris-brun selon la lumière et la température."],
 ["Crapaud commun","Bufo bufo","Sa peau verruqueuse sécrète des substances toxiques qui dissuadent les prédateurs. Chaque printemps, il retourne parfois sur plusieurs kilomètres vers la mare où il est né pour se reproduire."],
 ["Rainette aux yeux rouges","Agalychnis callidryas","Le jour, elle dort les yeux fermés, cachée sur une feuille. Surprise, elle ouvre soudain ses grands yeux rouges : ce flash de couleur peut désorienter un prédateur une fraction de seconde."],
-["Dendrobate bleu","Dendrobates tinctorius « azureus »","Ses couleurs vives préviennent les prédateurs qu'elle est toxique. Chaque individu a un motif de taches noires unique, comme une empreinte digitale. Son poison vient de son alimentation (fourmis, acariens) : élevée en captivité, elle n'en produit pas."],
+["Dendrobate bleu","Dendrobates tinctorius « azureus »","Ses couleurs vives préviennent les prédateurs qu'elle est toxique. Chaque spécimen a un motif de taches noires unique, comme une empreinte digitale. Son poison vient de son alimentation (fourmis, acariens) : élevée en captivité, elle n'en produit pas."],
 ["Dendrobate fraise","Oophaga pumilio","Minuscule (environ 2 cm), la mère porte ses têtards sur son dos jusqu'à de petites mares d'eau dans les feuilles de broméliacées, puis les nourrit avec des œufs non fécondés."],
-["Ouaouaron","Lithobates catesbeianus","La plus grande grenouille d'Amérique du Nord (plus de 15 cm). Son nom imite son cri grave. Il avale presque tout ce qui entre dans sa bouche, y compris d'autres grenouilles."],
+["Ouaouaron","Lithobates catesbeianus","La plus grande grenouille d'Amérique du Nord (plus de 15 cm). Son nom provient de son cri grave. Il avale presque tout ce qui entre dans sa bouche, y compris d'autres grenouilles."],
 ["Grenouille royale","Espèce imaginaire","Aucune vraie grenouille ne porte de couronne, de barbe blanche ni de manteau royal, mais les contes en regorgent : dans « Le Roi Grenouille » des frères Grimm, une grenouille se transforme en prince."]];
-const EI=[["Luciole",0,"Marécage","Se balade lentement au hasard et n'attaque jamais. Mais la frôler te blesse : attrape-la avec ta langue."],
-["Mouche",1,"Marécage","Une vraie attaquante : dès que tu commences à jouer, elle fonce droit sur toi à vitesse moyenne. Le boss du marécage est une mouche géante."],
+const EI=[["Luciole",0,"Marécage","Se balade lentement au hasard et n'attaque jamais. Attrape-la avec ta langue."],
+["Mouche",1,"Marécage","Une vraie attaquante ! Dès que tu commences à jouer, elle fonce droit sur toi à vitesse moyenne."],
 ["Libellule",2,"Marécage","Très rapide à l'horizontale, elle te suit en balayant l'écran, mais monte et descend lentement. Profite de sa lenteur verticale pour la piéger."],
-["Sauterelle",5,"Prairie","Elle avance par bonds : un brusque élan vers toi, puis presque immobile avant le saut suivant."],
-["Abeille",3,"Prairie","Elle s'approche, ralentit et tremble pour prendre son élan, puis fonce d'un coup avec son dard. Esquive pendant qu'elle tremble ! Le boss de la prairie est une abeille géante, encore plus rapide."],
-["Papillon",4,"Prairie","Il avance en zigzag, de haut en bas, par dents de scie, ce qui le rend difficile à viser."],
-["Scarabée",6,"Désert","Lent mais blindé : il faut 2 coups de langue pour le vaincre, et le premier le ralentit un moment. Deux pastilles jaunes au-dessus de lui indiquent sa vie."],
-["Coléoptère bombardier",9,"Désert","Il file vite d'un côté à l'autre en crachant des projectiles lents. Le boss du désert est un bombardier géant, plus rapide, dont les projectiles sont plus gros et plus rapides."],
-["Criquet",8,"Désert","Le plus rapide des poursuivants : il fonce sur toi en ligne droite. Garde ta langue prête."]];
+["Sauterelle",5,"Prairie","Elle avance par bonds : un brusque élan vers toi, puis presque immobile l'instant suivant."],
+["Abeille",3,"Prairie","Elle s'approche, ralentit et tremble pour prendre son élan, puis fonce d'un coup avec son dard. Esquive pendant qu'elle tremble !"],
+["Papillon",4,"Prairie","Il avance en zigzag, de haut en bas, ce qui le rend difficile à viser."],
+["Scarabée",6,"Désert","Lent mais blindé ! Il faut 2 coups de langue pour le vaincre, et le premier le ralentit un moment."],
+["Coléoptère bombardier",9,"Désert","Il file vite d'un côté à l'autre en crachant des projectiles lents."],
+["Criquet",8,"Désert","Le plus rapide des poursuivants : il fonce sur toi en ligne droite."]];
 function encS(){$('ef').className='b'+(eTab?'':' y');$('ei').className='b'+(eTab?' y':'');const el=$('el2');el.innerHTML='';
 if(!eTab)EF.forEach((f,i)=>{const lock=i==6&&!S.own.includes(6),d=document.createElement('div');d.className='ec';const im=new Image();im.src=FS[i][0].src;if(lock)im.style.filter='brightness(0) opacity(.55)';const tx=document.createElement('div');tx.innerHTML='<h3>'+(lock?'???':f[0])+'</h3><i>'+(lock?'Espèce secrète':f[1])+'</i><p>'+(lock?'Récolte les 75 <span class="lp"></span> pour la découvrir.':f[2])+'</p>';d.append(im,tx);el.append(d)});
 else EI.forEach(f=>{const d=document.createElement('div');d.className='ec';const im=new Image();im.src=SP[f[1]][0].toDataURL();const tx=document.createElement('div');tx.innerHTML='<h3>'+f[0]+'</h3><i>'+f[2]+'</i><p>'+f[3]+'</p>';d.append(im,tx);el.append(d)})}
